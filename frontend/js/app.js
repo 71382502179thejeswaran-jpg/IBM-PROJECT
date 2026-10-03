@@ -207,8 +207,8 @@ const AppState = {
     { student_id: 10, id: 49, course_code: 'CS604', course_name: 'Container Security & DevSecOps',            credits: 3, internal: 24.5, midterm: 40.0, assignment: 17.0, total: 81.5, grade: 'A' },
     { student_id: 10, id: 50, course_code: 'CS605', course_name: 'Artificial Intelligence & Neural Systems',  credits: 4, internal: 26.0, midterm: 42.0, assignment: 17.5, total: 85.5, grade: 'A' }
   ],
-  // Pre-seeded Leave Requests
-  leaves: [
+  // Pre-seeded Leave Requests (Persisted in localStorage)
+  leaves: JSON.parse(localStorage.getItem('apex_leaves') || 'null') || [
     { id: 1, student_id: 1, student_name: 'Alex Chen', roll_number: 'APX-2022-CS-084', leave_type: 'Medical', start_date: '2026-03-10', end_date: '2026-03-12', days_count: 3, reason: 'Viral infection with medical prescription', status: 'Approved', review_notes: 'Approved with hospital slip', reviewer_name: 'Dr. Robert Vance' },
     { id: 2, student_id: 6, student_name: 'Marcus Vance', roll_number: 'APX-2022-CS-112', leave_type: 'Family Emergency', start_date: '2026-03-18', end_date: '2026-03-20', days_count: 3, reason: 'Family medical travel', status: 'Pending', review_notes: null, reviewer_name: null },
     { id: 3, student_id: 3, student_name: 'David Kim', roll_number: 'APX-2022-CS-104', leave_type: 'Academic Event', start_date: '2026-03-25', end_date: '2026-03-26', days_count: 2, reason: 'IEEE Cloud Summit Hackathon', status: 'Approved', review_notes: 'Encouraged participation', reviewer_name: 'Prof. Anita Sharma' }
@@ -226,13 +226,13 @@ const AppState = {
     { id: 9, student_id: 9, student_name: 'Rohan Gupta', semester: 6, total_amount: 85000, paid_amount: 85000, due_amount: 0, status: 'Paid', receipt_no: 'RCPT-2026-06-130', payment_date: '2026-01-16' },
     { id: 10, student_id: 10, student_name: 'Priya Nair', semester: 6, total_amount: 85000, paid_amount: 85000, due_amount: 0, status: 'Paid', receipt_no: 'RCPT-2026-06-135', payment_date: '2026-01-19' }
   ],
-  // Pre-seeded Complaints / Grievances
-  complaints: [
+  // Pre-seeded Complaints / Grievances (Persisted in localStorage)
+  complaints: JSON.parse(localStorage.getItem('apex_complaints') || 'null') || [
     { id: 1, student_id: 1, student_name: 'Alex Chen', category: 'Hostel & Infrastructure', subject: 'Lab 4 Docker daemon socket permissions', description: 'Docker daemon connection refused on node 12 in Cloud Systems Lab.', status: 'Resolved', resolution_notes: 'Sudoers group updated for student sessions.', assigned_to: 'IT Systems Admin' },
     { id: 2, student_id: 6, student_name: 'Marcus Vance', category: 'Academic', subject: 'Attendance recount for CS601 lecture', description: 'Missed biometrics scan on March 3rd due to terminal reboot.', status: 'In Progress', resolution_notes: 'Faculty verification pending.', assigned_to: 'Dr. Robert Vance' }
   ],
-  // Pre-seeded Certificate Requests
-  certificates: [
+  // Pre-seeded Certificate Requests (Persisted in localStorage)
+  certificates: JSON.parse(localStorage.getItem('apex_certificates') || 'null') || [
     { id: 1, student_id: 1, student_name: 'Alex Chen', cert_type: 'Bonafide Certificate', purpose: 'Passport renewal & internship visa', status: 'Ready for Pickup', issue_date: '2026-03-02', serial_no: 'BONA-2026-084' },
     { id: 2, student_id: 2, student_name: 'Sophia Martinez', cert_type: 'Official Transcript', purpose: 'Higher studies application (MS Cloud)', status: 'Approved', issue_date: '2026-03-05', serial_no: 'TRNS-2026-091' },
     { id: 3, student_id: 6, student_name: 'Marcus Vance', cert_type: 'NOC for Internship', purpose: 'Summer off-campus internship', status: 'Pending Review', issue_date: null, serial_no: null }
@@ -266,11 +266,12 @@ const AppState = {
     { id: 6, day: 'Thursday', time: '10:00 AM - 11:30 AM', code: 'CS605', subject: 'AI & Neural Systems', room: 'AI Research Lab', instructor: 'Dr. Sarah Connor' },
     { id: 7, day: 'Friday', time: '02:00 PM - 04:00 PM', code: 'CS602', subject: 'Full-Stack Project Mentoring', room: 'Innovation Center', instructor: 'Prof. Anita Sharma' }
   ],
-  assignments: [
-    { id: 1, student_id: 1, course_code: 'CS601', title: 'Lab 3: Dockerizing Multi-Tier Node & PostgreSQL App', due_date: '2026-09-18', max_score: 100, score: 98, status: 'Submitted', description: 'Write a Dockerfile and docker-compose.yml to spin up Express, static frontend, and PostgreSQL with volume persistence.' },
-    { id: 2, student_id: 1, course_code: 'CS602', title: 'Project Milestone 2: REST API with Token Auth', due_date: '2026-09-24', max_score: 50, score: null, status: 'Pending', description: 'Implement role-based middleware for student, faculty, and admin roles with error handling.' },
-    { id: 3, student_id: 1, course_code: 'CS604', title: 'Security Audit: Rootless Container Gating', due_date: '2026-09-30', max_score: 50, score: null, status: 'Pending', description: 'Scan images with Trivy and patch CVEs in alpine base layers.' },
-    { id: 4, student_id: 1, course_code: 'CS603', title: 'Query Optimization & Indexing in PostgreSQL', due_date: '2026-10-05', max_score: 50, score: null, status: 'Pending', description: 'Analyze EXPLAIN ANALYZE traces on high-throughput university registration transactions.' }
+  // Pre-seeded Course Deliverables / Assignments (Persisted in localStorage)
+  assignments: JSON.parse(localStorage.getItem('apex_assignments') || 'null') || [
+    { id: 1, student_id: 1, course_code: 'CS601', title: 'Lab 3: Multi-Tier Cloud Application Architecture', due_date: '2026-09-18', max_score: 100, score: 98, status: 'Submitted', file_format: 'PDF', file_name: 'CS601_Lab3_Architecture_AlexChen.pdf', description: 'Architect Express backend, static frontend, and PostgreSQL with data persistence.' },
+    { id: 2, student_id: 1, course_code: 'CS602', title: 'Project Milestone 2: REST API with Token Auth', due_date: '2026-09-24', max_score: 50, score: null, status: 'Pending', file_format: null, file_name: null, description: 'Implement role-based middleware for student, faculty, and admin roles with error handling.' },
+    { id: 3, student_id: 1, course_code: 'CS604', title: 'Security Audit: Access Control & CVE Patching', due_date: '2026-09-30', max_score: 50, score: null, status: 'Pending', file_format: null, file_name: null, description: 'Scan application endpoints and patch vulnerability reports.' },
+    { id: 4, student_id: 1, course_code: 'CS603', title: 'Query Optimization & Indexing in PostgreSQL', due_date: '2026-10-05', max_score: 50, score: null, status: 'Pending', file_format: null, file_name: null, description: 'Analyze EXPLAIN traces on high-throughput university registration queries.' }
   ],
   exams: [
     { id: 1, course_code: 'CS601', subject: 'Cloud Computing & Microservices', date: 'Oct 12, 2026', time: '10:00 AM - 01:00 PM', hall: 'Examination Hall A, Seat 42', status: 'Upcoming' },
@@ -317,6 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadInitialData();
   startContainerTelemetryPolling();
   initRouting();
+  setTimeout(() => initAuthParticles(), 100);
 
   // Restore user session if saved
   if (AppState.currentUser) {
@@ -497,6 +499,10 @@ function navigateTo(targetPage, param) {
       loginView.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       selectLoginRole(param || 'student');
+      setTimeout(() => {
+        initAuthParticles();
+        playActiveVideos();
+      }, 50);
     }
     return;
   }
@@ -509,6 +515,10 @@ function navigateTo(targetPage, param) {
       regView.style.display = 'block';
       regView.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        initAuthParticles();
+        playActiveVideos();
+      }, 50);
     }
     return;
   }
@@ -1244,16 +1254,34 @@ function renderStudentMainStage(initialTab) {
       { student_id: std.id, id: 5, course_code: 'CS605', internal: 26.5, midterm: 43.0, total: 87.0, grade: 'A' }
     ]);
 
-    const studentLeaves = allLeaves.filter(l => l.student_id === std.id);
-    const displayLeaves = studentLeaves.length > 0 ? studentLeaves : allLeaves;
+    // Robust filter for active student's leave applications (by ID or student name)
+    const studentLeaves = allLeaves.filter(l => 
+      l.student_id == std.id || 
+      (l.student_name && std.full_name && l.student_name.toLowerCase().trim() === std.full_name.toLowerCase().trim())
+    );
+    const displayLeaves = studentLeaves;
+
+    // Filter course deliverables / assignments for active student
+    const studentAssignments = allAssignments.filter(a => 
+      !a.student_id || a.student_id == std.id || 
+      (a.student_name && std.full_name && a.student_name.toLowerCase().trim() === std.full_name.toLowerCase().trim())
+    );
+    const displayAssignments = studentAssignments.length > 0 ? studentAssignments : allAssignments;
 
     const studentFee = getStudentFees(std.id);
 
-    const studentComplaints = allComplaints.filter(c => c.student_id === std.id);
-    const displayComplaints = studentComplaints.length > 0 ? studentComplaints : allComplaints;
+    // Robust filter for active student's complaints & certificates (matches by id or full name)
+    const studentComplaints = allComplaints.filter(c => 
+      c.student_id == std.id || 
+      (c.student_name && std.full_name && c.student_name.toLowerCase().trim() === std.full_name.toLowerCase().trim())
+    );
+    const displayComplaints = studentComplaints;
 
-    const studentCerts = allCerts.filter(c => c.student_id === std.id);
-    const displayCerts = studentCerts.length > 0 ? studentCerts : allCerts;
+    const studentCerts = allCerts.filter(c => 
+      c.student_id == std.id || 
+      (c.student_name && std.full_name && c.student_name.toLowerCase().trim() === std.full_name.toLowerCase().trim())
+    );
+    const displayCerts = studentCerts;
 
     const studentPlacement = allPlacement.find(p => p.student_id === std.id) || {
       readiness_score: std.cgpa > 8.5 ? 92.5 : std.cgpa > 7.5 ? 78.0 : 58.0,
@@ -1450,14 +1478,22 @@ function renderStudentMainStage(initialTab) {
     <!-- SUB-TAB 4: ASSIGNMENTS -->
     <div class="dash-tab-pane ${activeTab === 'assignments' ? 'active' : ''}" id="pane_assignments">
       <div class="timetable-card">
-        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.2rem;"><i class="fa-solid fa-file-lines text-primary"></i> Course Deliverables: ${std.full_name}</h3>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-file-lines text-primary"></i> Course Deliverables: ${std.full_name}</h3>
+            <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0.2rem 0 0;">Upload and submit coursework in standard <strong>PDF (.pdf)</strong> or <strong>Word (.docx)</strong> format.</p>
+          </div>
+          <span class="tier-status status-running" style="font-size: 0.8rem;">
+            ${displayAssignments.filter(a => a.status === 'Submitted').length}/${displayAssignments.length} Submitted
+          </span>
+        </div>
         <div class="table-responsive">
           <table class="data-table">
             <thead>
-              <tr><th>Course</th><th>Assignment Title</th><th>Deadline</th><th>Max Score</th><th>Status</th><th>Action</th></tr>
+              <tr><th>Course</th><th>Assignment Title</th><th>Deadline</th><th>Max Score</th><th>Status</th><th>Submitted File & Action</th></tr>
             </thead>
             <tbody>
-              ${allAssignments.map(assign => `
+              ${displayAssignments.map(assign => `
                 <tr>
                   <td><code>${assign.course_code}</code></td>
                   <td><strong>${assign.title}</strong><div style="font-size: 0.8rem; color: var(--text-muted);">${assign.description}</div></td>
@@ -1465,10 +1501,21 @@ function renderStudentMainStage(initialTab) {
                   <td>${assign.max_score} pts</td>
                   <td><span class="tier-status ${assign.status === 'Submitted' ? 'status-running' : 'status-restarting'}">${assign.status}</span></td>
                   <td>
-                    ${assign.status === 'Submitted'
-                      ? `<button class="btn btn-secondary btn-sm" disabled><i class="fa-solid fa-check-double"></i> Submitted</button>`
-                      : `<button class="btn btn-primary btn-sm" onclick="submitStudentAssignment(${assign.id})"><i class="fa-solid fa-upload"></i> Submit Now</button>`
-                    }
+                    ${assign.status === 'Submitted' ? `
+                      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="cert-format-badge ${assign.file_format === 'Word' ? 'badge-word' : 'badge-pdf'}" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; font-weight: 700;">
+                          <i class="fa-solid ${assign.file_format === 'Word' ? 'fa-file-word' : 'fa-file-pdf'}"></i> ${assign.file_format || 'PDF'}
+                        </span>
+                        <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${assign.file_name || 'submission.pdf'}">${assign.file_name || 'submission.pdf'}</span>
+                        <button class="btn btn-outline btn-sm" style="padding: 2px 7px; font-size: 0.72rem;" onclick="openSubmitAssignmentModal(${assign.id})" title="Re-upload or change submitted document">
+                          <i class="fa-solid fa-arrows-rotate"></i> Change
+                        </button>
+                      </div>
+                    ` : `
+                      <button class="btn btn-primary btn-sm" onclick="openSubmitAssignmentModal(${assign.id})">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Submit Now
+                      </button>
+                    `}
                   </td>
                 </tr>
               `).join('')}
@@ -1709,36 +1756,95 @@ function renderStudentMainStage(initialTab) {
 
     <!-- SUB-TAB 8: DIGITAL LEAVE MANAGEMENT -->
     <div class="dash-tab-pane ${activeTab === 'student_leaves' ? 'active' : ''}" id="pane_student_leaves">
+      <!-- 1. Embedded Leave Application Form (Top) -->
+      <div class="timetable-card" style="margin-bottom: 1.5rem; border-top: 3px solid var(--accent-primary);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+          <div>
+            <h3 style="font-size: 1.18rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-plane-departure text-primary"></i> Apply for Academic / Medical Leave</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 0;">Fill out your absence dates and justification below. Submitted requests appear in the tracking table below instantly.</p>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="openModal('applyLeaveModal')">
+            <i class="fa-solid fa-up-right-from-square"></i> Open in Popup
+          </button>
+        </div>
+
+        <form id="inlineLeaveForm" onsubmit="handleInlineLeave(event)">
+          <div class="form-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Leave Category <span style="color: var(--status-danger);">*</span></label>
+              <select id="inlineLeaveType" class="form-control" required style="width: 100%;">
+                <option value="Academic Event">Academic Event / Conference / Hackathon</option>
+                <option value="Medical">Medical / Health Absence</option>
+                <option value="Personal">Personal Emergency</option>
+                <option value="Family">Family Commitment</option>
+                <option value="Duty Leave">Duty Leave / Sports / Official Representation</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">From Date <span style="color: var(--status-danger);">*</span></label>
+              <input type="date" id="inlineLeaveFrom" class="form-control" required style="width: 100%;">
+            </div>
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">To Date <span style="color: var(--status-danger);">*</span></label>
+              <input type="date" id="inlineLeaveTo" class="form-control" required style="width: 100%;">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Detailed Justification / Purpose <span style="color: var(--status-danger);">*</span></label>
+            <textarea id="inlineLeaveReason" class="form-control" rows="3" placeholder="Provide clear reason, affected classes, doctor prescription summary or competition link..." required style="width: 100%;"></textarea>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              <i class="fa-solid fa-bell text-primary"></i> Status updates and parental alerts will be synchronized automatically upon faculty review.
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-paper-plane"></i> Submit Leave Application
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 2. Leave Tracking Table (Below Form) -->
       <div class="timetable-card">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
           <div>
-            <h3 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-plane-departure text-primary"></i> Digital Leave Management</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Apply for academic, medical, or duty leaves with multi-tier digital tracking and automatic parental synchronization.</p>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-list-check text-primary"></i> Your Submitted Leave Requests (Track Status Below)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 0;">All leave applications filed by ${std.full_name} appear below in real-time with administrative verification status.</p>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="openModal('applyLeaveModal')">
-            <i class="fa-solid fa-plus"></i> Apply for Leave
-          </button>
+          <span class="tier-status ${displayLeaves.length > 0 ? 'status-running' : 'status-restarting'}">
+            ${displayLeaves.length} Requests Tracked
+          </span>
         </div>
 
         <div class="table-responsive">
           <table class="data-table">
             <thead>
-              <tr><th>ID</th><th>Type</th><th>Duration</th><th>Days</th><th>Reason</th><th>Status</th><th>Reviewer Remarks</th></tr>
+              <tr><th>Leave #</th><th>Category</th><th>Duration</th><th>Days</th><th>Reason / Purpose</th><th>Status</th><th>Reviewer Remarks</th></tr>
             </thead>
             <tbody>
-              ${displayLeaves.map(l => `
+              ${displayLeaves.length === 0 ? `
                 <tr>
-                  <td>#LV-${l.id}</td>
+                  <td colspan="7" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-plane-departure" style="font-size: 2.2rem; opacity: 0.35; display: block; margin-bottom: 0.6rem;"></i>
+                    <strong style="font-size: 0.95rem; color: var(--text-secondary);">No leave requests submitted yet</strong>
+                    <div style="font-size: 0.82rem; margin-top: 0.2rem;">Use the application form above to apply for academic, medical, or personal leave.</div>
+                  </td>
+                </tr>
+              ` : displayLeaves.map(l => `
+                <tr>
+                  <td><code>#LV-${l.id}</code></td>
                   <td><strong>${l.leave_type}</strong></td>
-                  <td><code>${l.start_date}</code> $\to$ <code>${l.end_date}</code></td>
-                  <td>${l.days_count} days</td>
-                  <td>${l.reason}</td>
+                  <td><code>${l.start_date || l.from_date}</code> &rarr; <code>${l.end_date || l.to_date}</code></td>
+                  <td><span class="badge" style="background: rgba(15,98,254,0.1); color: var(--accent-primary); font-weight: 700; padding: 2px 6px; border-radius: 4px;">${l.days_count || 1} d</span></td>
+                  <td style="max-width: 240px; font-size: 0.84rem;">${l.reason}</td>
                   <td>
-                    <span class="tier-status ${l.status === 'Approved' ? 'status-running' : l.status === 'Rejected' ? 'status-restarting' : ''}" style="${l.status === 'Pending' ? 'background: rgba(241,194,27,0.15); color: #d89b00;' : ''}">
-                      ${l.status}
+                    <span class="tier-status ${l.status === 'Approved' ? 'status-running' : l.status === 'Rejected' ? 'status-restarting' : ''}" style="${l.status === 'Pending' || l.status === 'Pending Review' ? 'background: rgba(241,194,27,0.15); color: #d89b00;' : ''}">
+                      <i class="fa-solid ${l.status === 'Approved' ? 'fa-check' : l.status === 'Rejected' ? 'fa-xmark' : 'fa-clock'}"></i> ${l.status}
                     </span>
                   </td>
-                  <td style="font-size: 0.85rem; color: var(--text-muted);">${l.review_notes || (l.status === 'Pending' ? 'Pending Faculty Review' : '—')}</td>
+                  <td style="font-size: 0.84rem; color: var(--text-muted);">
+                    ${l.review_notes || l.remarks || (l.status === 'Pending' || l.status === 'Pending Review' ? 'Awaiting Faculty / Dean Review' : '—')}
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -1752,19 +1858,19 @@ function renderStudentMainStage(initialTab) {
       <div class="dash-cards-grid">
         <div class="dash-card">
           <div class="dash-card-header"><span class="dash-card-title">Semester Fee</span><div class="dash-card-icon" style="background: rgba(15, 98, 254, 0.15); color: var(--ibm-blue-60);"><i class="fa-solid fa-coins"></i></div></div>
-          <div class="dash-card-value">$${Number(studentFee.total_amount || 0).toLocaleString()}</div>
+          <div class="dash-card-value">₹${Number(studentFee.total_amount || 0).toLocaleString()}</div>
           <div class="dash-card-sub">Semester ${studentFee.semester || std.semester || 6} Institutional Dues</div>
         </div>
 
         <div class="dash-card">
           <div class="dash-card-header"><span class="dash-card-title">Amount Paid</span><div class="dash-card-icon" style="background: rgba(36, 161, 72, 0.15); color: var(--status-success);"><i class="fa-solid fa-circle-check"></i></div></div>
-          <div class="dash-card-value" style="color: var(--status-success);">$${Number(studentFee.paid_amount || 0).toLocaleString()}</div>
+          <div class="dash-card-value" style="color: var(--status-success);">₹${Number(studentFee.paid_amount || 0).toLocaleString()}</div>
           <div class="dash-card-sub">Settled via NetBanking / Card</div>
         </div>
 
         <div class="dash-card">
           <div class="dash-card-header"><span class="dash-card-title">Outstanding Balance</span><div class="dash-card-icon" style="background: ${Number(studentFee.due_amount || 0) > 0 ? 'rgba(218, 30, 40, 0.15)' : 'rgba(36, 161, 72, 0.15)'}; color: ${Number(studentFee.due_amount || 0) > 0 ? 'var(--status-danger)' : 'var(--status-success)'};"><i class="fa-solid fa-receipt"></i></div></div>
-          <div class="dash-card-value" style="color: ${Number(studentFee.due_amount || 0) > 0 ? 'var(--status-danger)' : 'var(--status-success)'};">$${Number(studentFee.due_amount || 0).toLocaleString()}</div>
+          <div class="dash-card-value" style="color: ${Number(studentFee.due_amount || 0) > 0 ? 'var(--status-danger)' : 'var(--status-success)'};">₹${Number(studentFee.due_amount || 0).toLocaleString()}</div>
           <div class="dash-card-sub">${Number(studentFee.due_amount || 0) > 0 ? 'Due by March 31, 2026' : 'No Outstanding Dues'}</div>
         </div>
 
@@ -1786,15 +1892,15 @@ function renderStudentMainStage(initialTab) {
       </div>
 
       <div class="timetable-card">
-        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.2rem;"><i class="fa-solid fa-file-invoice-dollar text-primary"></i> Fee Structure Itemization</h3>
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.2rem;"><i class="fa-solid fa-indian-rupee-sign text-primary"></i> Fee Structure Itemization</h3>
         <div class="table-responsive">
           <table class="data-table">
             <thead><tr><th>Fee Category</th><th>Description</th><th>Institutional Share</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td><strong>Tuition & Instruction</strong></td><td>Semester 6 Cloud Native Curriculum & Lecture Credits</td><td>$8,000.00</td><td><span class="tier-status status-running">Paid</span></td></tr>
-              <tr><td><strong>Cloud Computing Lab Infrastructure</strong></td><td>Docker Cluster & Microservice Pod Allocations</td><td>$2,500.00</td><td><span class="tier-status status-running">Paid</span></td></tr>
-              <tr><td><strong>Examination & Assessment</strong></td><td>Semester End Examinations & Digital Hall Ticket</td><td>$1,000.00</td><td><span class="tier-status ${studentFee.due_amount === 0 ? 'status-running' : 'status-restarting'}">${studentFee.due_amount === 0 ? 'Paid' : 'Pending'}</span></td></tr>
-              <tr><td><strong>Digital Library & Research Resources</strong></td><td>IEEE / ACM Digital Library Institutional Access</td><td>$1,000.00</td><td><span class="tier-status ${studentFee.due_amount === 0 ? 'status-running' : 'status-restarting'}">${studentFee.due_amount === 0 ? 'Paid' : 'Pending'}</span></td></tr>
+              <tr><td><strong>Tuition & Instruction</strong></td><td>Semester 6 Cloud Native Curriculum & Lecture Credits</td><td>₹55,000</td><td><span class="tier-status status-running">Paid</span></td></tr>
+              <tr><td><strong>Cloud Computing Lab Infrastructure</strong></td><td>Lab Workstation & Microservice Environment</td><td>₹15,000</td><td><span class="tier-status status-running">Paid</span></td></tr>
+              <tr><td><strong>Examination & Assessment</strong></td><td>Semester End Examinations & Digital Hall Ticket</td><td>₹10,000</td><td><span class="tier-status ${studentFee.due_amount === 0 ? 'status-running' : 'status-restarting'}">${studentFee.due_amount === 0 ? 'Paid' : 'Pending'}</span></td></tr>
+              <tr><td><strong>Digital Library & Research Resources</strong></td><td>Digital Library Institutional Access</td><td>₹5,000</td><td><span class="tier-status ${studentFee.due_amount === 0 ? 'status-running' : 'status-restarting'}">${studentFee.due_amount === 0 ? 'Paid' : 'Pending'}</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -1803,22 +1909,81 @@ function renderStudentMainStage(initialTab) {
 
     <!-- SUB-TAB 10: COMPLAINTS & GRIEVANCE REDRESSAL -->
     <div class="dash-tab-pane ${activeTab === 'student_complaints' ? 'active' : ''}" id="pane_student_complaints">
+      <!-- 1. Embedded Submission Form (Top) -->
+      <div class="timetable-card" style="margin-bottom: 1.5rem; border-top: 3px solid var(--accent-primary);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+          <div>
+            <h3 style="font-size: 1.18rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-headset text-primary"></i> File a New Grievance / Support Ticket</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 0;">Submit your academic, infrastructure, hostel, or exam issue below for official administrative resolution.</p>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="openModal('submitComplaintModal')">
+            <i class="fa-solid fa-up-right-from-square"></i> Open in Popup
+          </button>
+        </div>
+
+        <form id="inlineComplaintForm" onsubmit="handleInlineComplaint(event)">
+          <div class="form-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Department / Category</label>
+              <select id="inlineComplaintCategory" class="form-control" required style="width: 100%;">
+                <option value="Academic">Academic & Attendance Roster</option>
+                <option value="Infrastructure">Infrastructure & Lab Facilities</option>
+                <option value="IT Systems">IT, Workstations & Cloud Portal</option>
+                <option value="Library">Library & Digital Books</option>
+                <option value="Hostel">Hostel & Campus Amenities</option>
+                <option value="Fee & Accounts">Fee, Subsidies & Accounts</option>
+                <option value="Transport">Transport & Campus Shuttle</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Priority Level</label>
+              <select id="inlineComplaintPriority" class="form-control" required style="width: 100%;">
+                <option value="Normal">Normal (Standard 48-Hour SLA)</option>
+                <option value="High">High (24-Hour Expedited)</option>
+                <option value="Urgent">Urgent (Immediate Admin Action)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Subject / Brief Summary</label>
+            <input type="text" id="inlineComplaintSubject" class="form-control" placeholder="Brief summary of the issue (e.g. Lab 4 network downtime, attendance recount CS601)..." required style="width: 100%;">
+          </div>
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Detailed Description</label>
+            <textarea id="inlineComplaintDesc" class="form-control" rows="3" placeholder="Provide full context, affected dates, course codes, workstation number, or faculty member involved..." required style="width: 100%;"></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-paper-plane"></i> Submit Grievance Ticket
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 2. Grievance Tracking Table (Below Form) -->
       <div class="timetable-card">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
           <div>
-            <h3 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-headset text-primary"></i> Grievance & Helpdesk Tracker</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Raise academic, infrastructure, hostel, or fee issues with SLA-backed tracking.</p>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-list-check text-primary"></i> Your Submitted Grievance Requests (Track Status Below)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 0;">All tickets registered by ${std.full_name} appear below in real-time with administrative SLA tracking.</p>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="openModal('submitComplaintModal')">
-            <i class="fa-solid fa-plus"></i> File New Grievance
-          </button>
+          <span class="tier-status ${displayComplaints.length > 0 ? 'status-running' : 'status-restarting'}">
+            ${displayComplaints.length} Tickets Registered
+          </span>
         </div>
 
         <div class="table-responsive">
           <table class="data-table">
             <thead><tr><th>Ticket #</th><th>Category</th><th>Subject</th><th>Assigned To</th><th>Status</th><th>Resolution Notes</th></tr></thead>
             <tbody>
-              ${displayComplaints.map(c => `
+              ${displayComplaints.length === 0 ? `
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-inbox" style="font-size: 2rem; display: block; margin-bottom: 0.6rem; opacity: 0.4;"></i>
+                    No grievances registered yet. Use the form above to submit your first ticket.
+                  </td>
+                </tr>
+              ` : displayComplaints.map(c => `
                 <tr>
                   <td><code>#TKT-${c.id}</code></td>
                   <td><strong>${c.category}</strong></td>
@@ -1836,39 +2001,90 @@ function renderStudentMainStage(initialTab) {
 
     <!-- SUB-TAB 11: CERTIFICATE REQUESTS -->
     <div class="dash-tab-pane ${activeTab === 'student_certificates' ? 'active' : ''}" id="pane_student_certificates">
+      <!-- 1. Embedded Request Form (Top) -->
+      <div class="timetable-card" style="margin-bottom: 1.5rem; border-top: 3px solid var(--accent-cyan);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+          <div>
+            <h3 style="font-size: 1.18rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-stamp text-primary"></i> Request Official University Certificate / Bonafide</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 0;">Apply for authenticated bonafide, study certificates, or transcripts. Digitally downloadable upon Admin approval.</p>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="openModal('requestCertificateModal')">
+            <i class="fa-solid fa-up-right-from-square"></i> Open in Popup
+          </button>
+        </div>
+
+        <form id="inlineCertForm" onsubmit="handleInlineCertificate(event)">
+          <div class="form-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Certificate Document Type</label>
+              <select id="inlineCertType" class="form-control" required style="width: 100%;">
+                <option value="Bonafide Certificate">Bonafide Certificate (Student Authentication)</option>
+                <option value="Study Certificate">Study & Character Certificate</option>
+                <option value="Course Completion Certificate">Course Completion Certificate</option>
+                <option value="Fee Estimation Certificate">Fee Estimation & Subsidy Certificate</option>
+                <option value="Transfer Certificate">Transfer Certificate (TC)</option>
+                <option value="NOC for Internship">No Objection Certificate (NOC) for Internship</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Purpose of Application</label>
+              <input type="text" id="inlineCertPurpose" class="form-control" placeholder="e.g. Visa application, educational bank loan, passport renewal, off-campus internship..." required style="width: 100%;">
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-paper-plane"></i> Submit Certificate Request
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 2. Certificates Table (Below Form) -->
       <div class="timetable-card">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
           <div>
-            <h3 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-stamp text-primary"></i> University Certificates Hub</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Request certified institutional letters, bonafide certificates, transcripts, and internship NOCs.</p>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;"><i class="fa-solid fa-file-contract text-primary"></i> Your Certificate Requests & Downloads (Below)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 0;">Check real-time status below. Click "Download Certificate" to obtain your authenticated document.</p>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="openModal('requestCertificateModal')">
-            <i class="fa-solid fa-plus"></i> Request Certificate
-          </button>
+          <span class="tier-status ${displayCerts.length > 0 ? 'status-running' : 'status-restarting'}">
+            ${displayCerts.length} Requests Filed
+          </span>
         </div>
 
         <div class="table-responsive">
           <table class="data-table">
             <thead><tr><th>Request ID</th><th>Certificate Type</th><th>Purpose</th><th>Status</th><th>Serial Number</th><th>Action</th></tr></thead>
             <tbody>
-              ${displayCerts.map(cert => `
+              ${displayCerts.length === 0 ? `
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-award" style="font-size: 2rem; display: block; margin-bottom: 0.6rem; opacity: 0.4;"></i>
+                    No certificate requests found. Fill out the form above to apply for an official document.
+                  </td>
+                </tr>
+              ` : displayCerts.map(cert => {
+                const docType = cert.cert_type || cert.certificate_type || 'Bonafide Certificate';
+                const isReady = cert.status === 'Ready for Pickup' || cert.status === 'Approved';
+                return `
                 <tr>
                   <td><code>#REQ-${cert.id}</code></td>
-                  <td><strong>${cert.cert_type}</strong></td>
+                  <td><strong>${docType}</strong></td>
                   <td>${cert.purpose}</td>
-                  <td><span class="tier-status ${cert.status === 'Ready for Pickup' || cert.status === 'Approved' ? 'status-running' : 'status-restarting'}">${cert.status}</span></td>
+                  <td><span class="tier-status ${isReady ? 'status-running' : 'status-restarting'}">${cert.status}</span></td>
                   <td><code>${cert.serial_no || 'In Generation'}</code></td>
                   <td>
-                    ${cert.status === 'Ready for Pickup' || cert.status === 'Approved' ? `
-                      <button class="btn btn-outline btn-sm" onclick="downloadCertificate(${cert.id})">
-                        <i class="fa-solid fa-file-arrow-down"></i> Download PDF
+                    ${isReady ? `
+                      <button type="button" class="btn btn-primary btn-sm" onclick="downloadCertificate(${cert.id})" title="Download Official Certificate">
+                        <i class="fa-solid fa-download"></i> Download Certificate
                       </button>
                     ` : `
-                      <span style="font-size: 0.82rem; color: var(--text-muted);"><i class="fa-solid fa-clock"></i> In Verification</span>
+                      <span style="font-size: 0.82rem; color: var(--status-warning); font-weight: 600;">
+                        <i class="fa-solid fa-clock"></i> Pending Admin Approval
+                      </span>
                     `}
                   </td>
                 </tr>
-              `).join('')}
+              `;}).join('')}
             </tbody>
           </table>
         </div>
@@ -2012,6 +2228,21 @@ function renderFacultyMainStage(initialTab) {
           </div>
         </div>
 
+        <!-- Faculty Attendance Permission Toolbar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.8rem; background:rgba(15,98,254,0.04); border:1px solid var(--border-subtle); padding:0.7rem 1.1rem; border-radius:var(--radius-md);">
+          <div style="font-size:0.84rem; color:var(--text-secondary);">
+            <i class="fa-solid fa-user-shield text-primary"></i> <strong>Faculty Attendance Permissions:</strong> Grant direct permission to mark/set attendance % for other students, or unlock everyone at once.
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button type="button" class="btn btn-primary btn-sm" onclick="facultyGrantDirectPermissionAll('${activeCourseCode}')" title="Grant attendance % edit permission for all students">
+              <i class="fa-solid fa-unlock-keyhole"></i> Grant Permission for All
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="facultyRevokeDirectPermissionAll('${activeCourseCode}')" title="Lock custom attendance % edits">
+              <i class="fa-solid fa-lock"></i> Lock All
+            </button>
+          </div>
+        </div>
+
         <div class="table-responsive">
           <table class="data-table">
             <thead>
@@ -2022,7 +2253,7 @@ function renderFacultyMainStage(initialTab) {
                 <th>Dept</th>
                 <th>${activeCourseCode} Attendance %</th>
                 <th>Mark Today's Session</th>
-                <th>Attendance % Override (Admin Permission)</th>
+                <th>Attendance % Edit & Permission</th>
               </tr>
             </thead>
             <tbody id="facAttTableBody">
@@ -2044,7 +2275,7 @@ function renderFacultyMainStage(initialTab) {
                 const todayKey = `${activeCourseCode}_${s.id}`;
                 const todayMark = AppState.todayAttendance ? AppState.todayAttendance[todayKey] : null;
 
-                // Check override permission granted by Admin
+                // Check override permission granted by Faculty or Admin
                 const isOverrideApproved = (s._overrideGranted && s._overrideGranted[activeCourseCode] === true) ||
                   AppState.attendanceOverrides.some(o => o.student_id === s.id && o.course_code === activeCourseCode && o.status === 'Approved');
                 const pendingOverride = AppState.attendanceOverrides.find(o => o.student_id === s.id && o.course_code === activeCourseCode && o.status === 'Pending');
@@ -2091,18 +2322,24 @@ function renderFacultyMainStage(initialTab) {
                     <td>
                       ${isOverrideApproved ? `
                         <div class="direct-override-box">
-                          <span style="font-size:0.75rem; font-weight:700; color:var(--status-success); white-space:nowrap;"><i class="fa-solid fa-unlock"></i> Permission Granted</span>
-                          <div style="display:flex; align-items:center; gap:0.3rem; margin-top:2px;">
+                          <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:4px;">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--status-success); white-space:nowrap;"><i class="fa-solid fa-unlock"></i> Permission Granted</span>
+                            <button type="button" class="btn btn-outline btn-sm" style="padding:1px 6px; font-size:0.68rem; border-color:var(--border-subtle);" onclick="facultyRevokeDirectPermission(${s.id}, '${activeCourseCode}')" title="Lock editing for this student"><i class="fa-solid fa-lock"></i> Lock</button>
+                          </div>
+                          <div style="display:flex; align-items:center; gap:0.3rem;">
                             <input type="number" id="customPctInput_${s.id}_${activeCourseCode}" value="${attRecord.percentage}" min="0" max="100" step="0.1" class="form-control" style="width:68px; padding:2px 6px; font-size:0.82rem; font-weight:700; height:28px;">
                             <button type="button" class="btn btn-primary btn-sm" style="padding:2px 8px; font-size:0.75rem;" onclick="saveCustomPercentage(${s.id}, '${activeCourseCode}')" title="Directly set attendance %">Set %</button>
                           </div>
                         </div>
-                      ` : pendingOverride ? `
-                        <span class="tier-status status-restarting" style="font-size:0.75rem;" title="Request submitted to Administrator"><i class="fa-solid fa-clock"></i> Override Pending Admin (${pendingOverride.requested_percentage}%)</span>
                       ` : `
-                        <button type="button" class="btn btn-outline btn-sm" style="font-size:0.75rem; padding:3px 10px;" onclick="openFacultyOverrideModal(${s.id}, '${s.full_name.replace(/'/g, "\\'")}', '${s.roll_number}', '${activeCourseCode}', ${attRecord.percentage})">
-                          <i class="fa-solid fa-lock"></i> Request % Override
-                        </button>
+                        <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+                          <button type="button" class="btn btn-primary btn-sm" style="font-size:0.75rem; padding:4px 10px;" onclick="facultyGrantDirectPermission(${s.id}, '${activeCourseCode}')" title="Grant immediate permission to mark / edit attendance % for ${s.full_name.replace(/'/g, "\\'")}">
+                            <i class="fa-solid fa-unlock"></i> Grant Permission
+                          </button>
+                          <button type="button" class="btn btn-outline btn-sm" style="font-size:0.73rem; padding:4px 8px; color:var(--text-muted);" onclick="openFacultyOverrideModal(${s.id}, '${s.full_name.replace(/'/g, "\\'")}', '${s.roll_number}', '${activeCourseCode}', ${attRecord.percentage})" title="Submit formal override request to Admin">
+                            <i class="fa-solid fa-paper-plane"></i> Admin Request
+                          </button>
+                        </div>
                       `}
                     </td>
                   </tr>
@@ -3174,24 +3411,84 @@ function renderAdminMainStage(initialTab) {
       </div>
 
       <!-- Certificate Requests -->
-      <div class="timetable-card">
-        <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:1rem;"><i class="fa-solid fa-stamp text-primary"></i> Certificate Request Management</h3>
+      <div class="timetable-card" style="margin-bottom: 1.5rem;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.8rem;">
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:800; margin:0;"><i class="fa-solid fa-stamp text-primary"></i> Certificate & Document Requests (Admin Approval)</h3>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin:0.3rem 0 0;">Review, digitally sign, and issue student Bonafide certificates, transcripts, and study documents.</p>
+          </div>
+          <span class="tier-status ${AppState.certificates.filter(c=>c.status==='Pending Admin Approval'||c.status==='Pending Review'||c.status==='Processing').length > 0 ? 'status-restarting' : 'status-running'}">
+            ${AppState.certificates.filter(c=>c.status==='Pending Admin Approval'||c.status==='Pending Review'||c.status==='Processing').length} Pending Approval
+          </span>
+        </div>
         <div class="table-responsive">
           <table class="data-table">
             <thead><tr><th>Student</th><th>Certificate Type</th><th>Purpose</th><th>Status</th><th>Serial No</th><th>Action</th></tr></thead>
             <tbody>
+              ${AppState.certificates.length === 0 ? `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:1.5rem;">No certificate requests found.</td></tr>` : ''}
               ${AppState.certificates.map(c => {
-                const sc = c.status==='Ready for Pickup'||c.status==='Approved'?'var(--status-success)':c.status==='Pending Review'?'var(--status-warning)':'#da1e28';
+                const isApproved = c.status === 'Ready for Pickup' || c.status === 'Approved';
+                const isRejected = c.status === 'Rejected';
+                const sc = isApproved ? 'var(--status-success)' : isRejected ? '#da1e28' : 'var(--status-warning)';
                 return `<tr>
                   <td><strong>${c.student_name}</strong></td>
-                  <td>${c.cert_type}</td>
+                  <td><span class="badge badge-primary">${c.cert_type}</span></td>
                   <td style="font-size:0.83rem;">${c.purpose}</td>
-                  <td><span style="font-weight:700;color:${sc};">${c.status}</span></td>
-                  <td><code>${c.serial_no||'Pending'}</code></td>
-                  <td>${c.status==='Pending Review'?`
+                  <td><span style="font-weight:700;color:${sc};background:rgba(0,0,0,0.05);padding:3px 10px;border-radius:12px;font-size:0.8rem;">${c.status}</span></td>
+                  <td><code>${c.serial_no || 'Pending'}</code></td>
+                  <td>
+                    ${!isApproved && !isRejected ? `
                     <div style="display:flex;gap:0.4rem;">
                       <button class="btn btn-primary btn-sm" onclick="approveCertificate(${c.id})"><i class="fa-solid fa-check"></i> Approve</button>
-                    </div>`:c.status==='Approved'||c.status==='Ready for Pickup'?`<span style="color:var(--text-muted);font-size:0.82rem;">Issued</span>`:`<span style="color:var(--text-muted);font-size:0.82rem;">—</span>`}
+                      <button class="btn btn-secondary btn-sm" style="color:#da1e28;" onclick="rejectCertificate(${c.id})"><i class="fa-solid fa-xmark"></i> Reject</button>
+                    </div>` : isApproved ? `
+                    <div style="display:flex;gap:0.4rem;align-items:center;">
+                      <span style="color:var(--status-success);font-size:0.82rem;font-weight:700;"><i class="fa-solid fa-circle-check"></i> Approved</span>
+                      <button class="btn btn-outline btn-sm" style="font-size:0.75rem;padding:2px 8px;" onclick="downloadCertificate(${c.id})"><i class="fa-solid fa-download"></i> View</button>
+                    </div>` : `<span style="color:#da1e28;font-size:0.82rem;font-weight:700;"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>`}
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Grievance & Helpdesk Management -->
+      <div class="timetable-card">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.8rem;">
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:800; margin:0;"><i class="fa-solid fa-headset" style="color: #ff8389;"></i> Grievance & Helpdesk Management (Admin Approvals)</h3>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin:0.3rem 0 0;">Review student grievances, assign officers, and resolve complaints across all campus departments.</p>
+          </div>
+          <span class="tier-status ${AppState.complaints.filter(c=>c.status!=='Resolved').length > 0 ? 'status-restarting' : 'status-running'}">
+            ${AppState.complaints.filter(c=>c.status!=='Resolved').length} Active Tickets
+          </span>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead><tr><th>Ticket #</th><th>Student</th><th>Category</th><th>Subject</th><th>Description</th><th>Status</th><th>Resolution Notes</th><th>Action</th></tr></thead>
+            <tbody>
+              ${AppState.complaints.length === 0 ? `<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:1.5rem;">No grievances registered.</td></tr>` : ''}
+              ${AppState.complaints.map(c => {
+                const isResolved = c.status === 'Resolved';
+                const isInProgress = c.status === 'In Progress';
+                const sc = isResolved ? 'var(--status-success)' : isInProgress ? 'var(--accent-cyan)' : 'var(--status-warning)';
+                return `<tr>
+                  <td><code>#TKT-${c.id}</code></td>
+                  <td><strong>${c.student_name}</strong></td>
+                  <td><span class="badge badge-primary">${c.category}</span></td>
+                  <td><strong>${c.subject}</strong></td>
+                  <td style="font-size:0.82rem;max-width:200px;color:var(--text-secondary);">${c.description || '—'}</td>
+                  <td><span style="font-weight:700;color:${sc};background:rgba(0,0,0,0.05);padding:3px 10px;border-radius:12px;font-size:0.8rem;">${c.status}</span></td>
+                  <td style="font-size:0.82rem;color:var(--text-muted);">${c.resolution_notes || (isResolved ? 'Resolved by Admin' : 'Pending verification')}</td>
+                  <td>
+                    ${!isResolved ? `
+                      <div style="display:flex;gap:0.4rem;">
+                        <button class="btn btn-primary btn-sm" onclick="adminResolveGrievance(${c.id})"><i class="fa-solid fa-check-double"></i> Approve & Resolve</button>
+                        ${!isInProgress ? `<button class="btn btn-outline btn-sm" onclick="adminReviewGrievance(${c.id})"><i class="fa-solid fa-magnifying-glass"></i> Review</button>` : ''}
+                      </div>
+                    ` : `<span style="color:var(--status-success);font-size:0.82rem;font-weight:700;"><i class="fa-solid fa-circle-check"></i> Resolved</span>`}
                   </td>
                 </tr>`;
               }).join('')}
@@ -3300,22 +3597,8 @@ async function simulateContainerAction(tier, action) {
   }
 }
 
-async function submitStudentAssignment(assignId) {
-  try {
-    const res = await fetch(`${API_BASE}/assignments/${assignId}/submit`, { method: 'POST' });
-    const json = await res.json();
-    if (json.success) {
-      showToast(json.message, 'success');
-      const target = AppState.assignments.find(a => a.id === assignId);
-      if (target) target.status = 'Submitted';
-      renderRoleDashboard('student', 'assignments');
-    }
-  } catch (err) {
-    const target = AppState.assignments.find(a => a.id === assignId);
-    if (target) target.status = 'Submitted';
-    showToast('Assignment submitted successfully!', 'success');
-    renderRoleDashboard('student', 'assignments');
-  }
+function submitStudentAssignment(assignId) {
+  openSubmitAssignmentModal(assignId);
 }
 
 function markAttendance(studentIndex, isPresent, btnElem) {
@@ -3392,30 +3675,36 @@ function filterAdminStudents(query) {
 
 async function handleAddStudentSubmit(e) {
   e.preventDefault();
-  const full_name = document.getElementById('newStdName').value;
-  const email = document.getElementById('newStdEmail').value;
-  const roll_number = document.getElementById('newStdRoll').value;
+  const full_name = document.getElementById('newStdName').value.trim();
+  const email = document.getElementById('newStdEmail').value.trim();
+  let roll_number = (document.getElementById('newStdRoll').value || '').trim();
   const department = document.getElementById('newStdDept').value;
-  const semester = document.getElementById('newStdSem').value;
-  const cgpa = document.getElementById('newStdCgpa').value;
+  const semester = parseInt(document.getElementById('newStdSem').value) || 1;
+  const cgpa = parseFloat(document.getElementById('newStdCgpa').value) || 0.0;
+  const attInput = document.getElementById('newStdAttendance');
+  const overall_attendance = attInput && attInput.value !== '' ? parseFloat(attInput.value) : 0.0;
+
+  if (!roll_number || roll_number === 'APX-') {
+    roll_number = `APX-2026-CS-${Math.floor(100 + Math.random() * 900)}`;
+  }
 
   try {
     const res = await fetch(`${API_BASE}/students`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ full_name, email, roll_number, department, semester, cgpa })
+      body: JSON.stringify({ full_name, email, roll_number, department, semester, cgpa, overall_attendance })
     });
     const json = await res.json();
-    if (json.success) {
+    if (json.success && json.data) {
       AppState.students.push(json.data);
     } else {
       // fallback: push locally
-      AppState.students.push({ id: Date.now(), full_name, email, roll_number, department, semester: parseInt(semester), cgpa: parseFloat(cgpa), overall_attendance: 100.0, status: 'Active' });
+      AppState.students.push({ id: Date.now(), full_name, email, roll_number, department, semester, cgpa, overall_attendance, status: 'Active' });
     }
   } catch (err) {
-    AppState.students.push({ id: Date.now(), full_name, email, roll_number, department, semester: parseInt(semester), cgpa: parseFloat(cgpa), overall_attendance: 100.0, status: 'Active' });
+    AppState.students.push({ id: Date.now(), full_name, email, roll_number, department, semester, cgpa, overall_attendance, status: 'Active' });
   }
-  showToast(`Student ${full_name} enrolled successfully!`, 'success');
+  showToast(`Student ${full_name} enrolled successfully! (Attendance: ${overall_attendance}%)`, 'success');
   closeModal('addStudentModal');
   document.getElementById('addStudentForm').reset();
   // Re-render whichever dashboard is active
@@ -3462,40 +3751,73 @@ function switchFacAttCourse(courseCode) {
 }
 
 // --- Approve / Reject Leave (Faculty) ---
-function approveLeave(leaveId) {
+async function approveLeave(leaveId) {
   const leave = AppState.leaves.find(l => l.id === leaveId);
   if (!leave) return;
   leave.status = 'Approved';
-  leave.reviewer_name = (AppState.currentUser && AppState.currentUser.full_name) || 'Faculty';
+  leave.reviewer_name = (AppState.currentUser && AppState.currentUser.full_name) || 'Dr. Robert Vance';
   leave.review_notes = 'Approved via Faculty Portal.';
+  try {
+    localStorage.setItem('apex_leaves', JSON.stringify(AppState.leaves));
+  } catch (_) {}
+  try {
+    await fetch(`${API_BASE}/leave/${leaveId}/review`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'Approved', remarks: leave.review_notes, reviewer_name: leave.reviewer_name })
+    });
+  } catch (_) {}
   showToast(`Leave approved for ${leave.student_name}.`, 'success');
   renderFacultyMainStage('fac_leaves');
 }
 
-function rejectLeave(leaveId) {
+async function rejectLeave(leaveId) {
   const leave = AppState.leaves.find(l => l.id === leaveId);
   if (!leave) return;
   leave.status = 'Rejected';
-  leave.reviewer_name = (AppState.currentUser && AppState.currentUser.full_name) || 'Faculty';
+  leave.reviewer_name = (AppState.currentUser && AppState.currentUser.full_name) || 'Dr. Robert Vance';
   leave.review_notes = 'Rejected via Faculty Portal.';
+  try {
+    localStorage.setItem('apex_leaves', JSON.stringify(AppState.leaves));
+  } catch (_) {}
+  try {
+    await fetch(`${API_BASE}/leave/${leaveId}/review`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'Rejected', remarks: leave.review_notes, reviewer_name: leave.reviewer_name })
+    });
+  } catch (_) {}
   showToast(`Leave rejected for ${leave.student_name}.`, 'warning');
   renderFacultyMainStage('fac_leaves');
 }
 
-// --- Download Certificate (Student) ---
+// --- Download Certificate (Student & Admin) ---
 function downloadCertificate(certId) {
   const cert = AppState.certificates.find(c => c.id === certId);
-  const std  = AppState.currentUser && AppState.currentUser.profile ? AppState.currentUser.profile : AppState.students[0];
   if (!cert) { showToast('Certificate not found.', 'warning'); return; }
 
-  const issueDate = cert.issue_date || new Date().toISOString().split('T')[0];
-  const html = `
-    <!DOCTYPE html><html><head><meta charset="UTF-8">
-    <title>${cert.cert_type} — ${cert.serial_no}</title>
+  // Resolve matching student profile
+  const std = (AppState.currentUser && AppState.currentUser.profile && (AppState.currentUser.profile.id == cert.student_id || AppState.currentUser.profile.full_name === cert.student_name))
+    ? AppState.currentUser.profile
+    : (AppState.students.find(s => s.id == cert.student_id || s.full_name === cert.student_name) || AppState.students[0] || {
+        full_name: cert.student_name || 'Alex Chen',
+        roll_number: 'APX-2022-CS-084',
+        department: 'Computer Science & Cloud Computing',
+        semester: 6
+      });
+
+  const certType = cert.cert_type || cert.certificate_type || 'Bonafide Certificate';
+  const serialNo = (cert.serial_no && cert.serial_no !== 'Pending Verification' && cert.serial_no !== 'Pending') 
+    ? cert.serial_no 
+    : `BONA-2026-${String(cert.student_id || cert.id || 1).padStart(3, '0')}`;
+  const issueDate = cert.issue_date || cert.issued_at || new Date().toISOString().split('T')[0];
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <title>${certType} — ${serialNo}</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Montserrat:wght@700;900&display=swap');
       body { margin:0; padding:0; font-family:'EB Garamond',serif; background:#fff; color:#1a1a2e; }
-      .cert-wrap { width:900px; margin:40px auto; padding:60px 70px; border:8px double #0f62fe; position:relative; box-sizing:border-box; }
+      .cert-wrap { width:900px; margin:40px auto; padding:60px 70px; border:8px double #0f62fe; position:relative; box-sizing:border-box; background:#fff; }
       .cert-wrap::before { content:''; position:absolute; inset:10px; border:2px solid #0f62fe22; pointer-events:none; }
       .logo-row { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
       .logo-circle { width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,#0f62fe,#009d9a); display:flex; align-items:center; justify-content:center; }
@@ -3505,7 +3827,7 @@ function downloadCertificate(certId) {
       hr { border:none; border-top:2px solid #0f62fe44; margin:20px 0; }
       .cert-title { text-align:center; font-family:'Montserrat',sans-serif; font-weight:900; font-size:2.4rem; color:#0f62fe; letter-spacing:0.04em; margin:10px 0 6px; }
       .cert-subtitle { text-align:center; font-size:1rem; color:#555; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:30px; }
-      .cert-body { font-size:1.15rem; line-height:2; text-align:justify; }
+      .cert-body { font-size:1.15rem; line-height:2; text-align:justify; color:#222; }
       .cert-body strong { color:#0f62fe; }
       .serial { display:inline-block; background:#f4f8ff; border:1px solid #0f62fe44; border-radius:4px; padding:2px 12px; font-size:0.88rem; font-family:monospace; color:#0f62fe; }
       .sig-row { display:flex; justify-content:space-between; margin-top:60px; }
@@ -3513,7 +3835,7 @@ function downloadCertificate(certId) {
       .sig-line { border-top:1.5px solid #333; margin:0 auto 6px; width:160px; }
       .sig-label{ font-size:0.82rem; color:#666; text-transform:uppercase; letter-spacing:0.08em; }
       .watermark { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); font-family:'Montserrat',sans-serif; font-size:6rem; font-weight:900; color:#0f62fe08; pointer-events:none; white-space:nowrap; z-index:0; }
-      @media print { body { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+      @media print { body { -webkit-print-color-adjust:exact; print-color-adjust:exact; } .cert-wrap { margin:0; width:100%; border:6px double #0f62fe; } }
     </style></head><body>
     <div class="cert-wrap">
       <div class="watermark">APEX UNIVERSITY</div>
@@ -3525,29 +3847,29 @@ function downloadCertificate(certId) {
         </div>
       </div>
       <hr>
-      <div class="cert-title">${cert.cert_type.toUpperCase()}</div>
+      <div class="cert-title">${certType.toUpperCase()}</div>
       <div class="cert-subtitle">Certificate of Authentication</div>
       <hr>
       <div class="cert-body">
         <p>This is to certify that <strong>${std.full_name || cert.student_name}</strong>,
-        bearing Roll Number <strong>${std.roll_number || '—'}</strong>, enrolled in the
+        bearing Roll Number <strong>${std.roll_number || 'APX-2022-CS-084'}</strong>, enrolled in the
         <strong>${std.department || 'Department of Computer Science &amp; Cloud Computing'}</strong>,
-        Semester <strong>${std.semester || '6'}</strong>, is a bonafide student of this institution.</p>
+        Semester <strong>${std.semester || '6'}</strong>, is a bonafide student in good academic standing at this institution.</p>
 
-        <p>This certificate has been issued for the purpose of: <strong>${cert.purpose}</strong>.</p>
+        <p>This certificate has been issued upon institutional verification for the purpose of: <strong>${cert.purpose}</strong>.</p>
 
-        <p>This certificate is valid as of the issue date and bears the institutional seal of Apex University of Technology.</p>
+        <p>This certificate is valid as of the issue date and bears the institutional seal and registrar authorization of Apex University of Technology.</p>
 
-        <p>Serial Number: <span class="serial">${cert.serial_no}</span> &nbsp;|&nbsp; Issue Date: <strong>${issueDate}</strong></p>
+        <p>Serial Number: <span class="serial">${serialNo}</span> &nbsp;|&nbsp; Issue Date: <strong>${issueDate}</strong></p>
       </div>
       <div class="sig-row">
         <div class="sig-box">
           <div class="sig-line"></div>
-          <div class="sig-label">Registrar</div>
+          <div class="sig-label">Registrar Office</div>
         </div>
         <div class="sig-box">
           <div class="sig-line"></div>
-          <div class="sig-label">Head of Department</div>
+          <div class="sig-label">Dean of Academic Affairs</div>
         </div>
         <div class="sig-box">
           <div class="sig-line"></div>
@@ -3555,16 +3877,128 @@ function downloadCertificate(certId) {
         </div>
       </div>
     </div>
-    <script>window.onload=function(){ window.print(); }</script>
     </body></html>`;
 
-  const blob = new Blob([html], { type: 'text/html' });
-  const url  = URL.createObjectURL(blob);
-  const win  = window.open(url, '_blank', 'width=1000,height=750');
-  if (!win) { showToast('Allow popups to download the certificate.', 'warning'); return; }
-  showToast(`Certificate ${cert.serial_no} opened for download/print.`, 'success');
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  // 1. Trigger Direct File Download (.html) immediately
+  try {
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const dlLink = document.createElement('a');
+    dlLink.href = url;
+    dlLink.download = `${certType.replace(/\s+/g, '_')}_${serialNo}.html`;
+    document.body.appendChild(dlLink);
+    dlLink.click();
+    document.body.removeChild(dlLink);
+    setTimeout(() => URL.revokeObjectURL(url), 15000);
+  } catch (err) {
+    console.warn('[Download] Fallback trigger', err);
+  }
+
+  // 2. Open interactive Certificate Preview Modal
+  window.activeCertificateData = { cert, std, certType, serialNo, issueDate, html };
+  renderCertificateModalPreview(window.activeCertificateData);
+  openModal('certificatePreviewModal');
+
+  showToast(`Certificate ${serialNo} downloaded! Document preview is open.`, 'success');
 }
+
+function renderCertificateModalPreview(data) {
+  const container = document.getElementById('certificatePreviewContent');
+  if (!container) return;
+  const { std, cert, certType, serialNo, issueDate } = data;
+  container.innerHTML = `
+    <div class="cert-preview-card">
+      <div class="cert-watermark-text">APEX UNIVERSITY</div>
+      <div class="cert-preview-inner-border">
+        <div class="cert-preview-header">
+          <div class="cert-preview-emblem"><span>A</span></div>
+          <div>
+            <div class="cert-preview-inst-name">APEX UNIVERSITY OF TECHNOLOGY</div>
+            <div class="cert-preview-inst-sub">IBM Center of Excellence · Cloud &amp; AI Research Division</div>
+          </div>
+        </div>
+
+        <div class="cert-preview-title">${certType.toUpperCase()}</div>
+        <div class="cert-preview-subtitle">Official Certificate of Authentication</div>
+
+        <div class="cert-preview-body">
+          <p>This is to certify that <strong>${std.full_name || cert.student_name}</strong>,
+          bearing Roll Number <strong>${std.roll_number || 'APX-2022-CS-084'}</strong>, enrolled in the
+          <strong>${std.department || 'Department of Computer Science &amp; Cloud Computing'}</strong>,
+          Semester <strong>${std.semester || '6'}</strong>, is a bonafide student in good academic standing at this institution.</p>
+
+          <p>This certificate has been issued upon official verification for the purpose of: <strong>${cert.purpose}</strong>.</p>
+
+          <p>This digital certificate bears the institutional seal and registrar cryptographic verification of Apex University of Technology.</p>
+        </div>
+
+        <div class="cert-preview-meta-row">
+          <div><span style="color:var(--text-muted);">Serial Number:</span> <strong>${serialNo}</strong></div>
+          <div><span style="color:var(--text-muted);">Issue Date:</span> <strong>${issueDate}</strong></div>
+          <div><span style="color:var(--status-success);"><i class="fa-solid fa-circle-check"></i> Digitally Signed &amp; Approved</span></div>
+        </div>
+
+        <div class="cert-preview-signatures">
+          <div class="cert-sig-block">
+            <div class="cert-sig-line"></div>
+            <div class="cert-sig-label">Registrar Office</div>
+          </div>
+          <div class="cert-sig-block">
+            <div class="cert-sig-line"></div>
+            <div class="cert-sig-label">Dean of Academic Affairs</div>
+          </div>
+          <div class="cert-sig-block">
+            <div class="cert-sig-line"></div>
+            <div class="cert-sig-label">Vice Chancellor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function printActiveCertificate() {
+  if (!window.activeCertificateData) return;
+  const printWindow = window.open('', '_blank', 'width=950,height=750');
+  if (printWindow) {
+    printWindow.document.write(window.activeCertificateData.html);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+    }, 350);
+  } else {
+    let frame = document.getElementById('certPrintIframe');
+    if (!frame) {
+      frame = document.createElement('iframe');
+      frame.id = 'certPrintIframe';
+      frame.style.display = 'none';
+      document.body.appendChild(frame);
+    }
+    frame.contentWindow.document.open();
+    frame.contentWindow.document.write(window.activeCertificateData.html);
+    frame.contentWindow.document.close();
+    frame.contentWindow.focus();
+    setTimeout(() => {
+      frame.contentWindow.print();
+    }, 300);
+  }
+}
+
+function triggerActiveCertDownload() {
+  if (!window.activeCertificateData) return;
+  const { certType, serialNo, html } = window.activeCertificateData;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const dlLink = document.createElement('a');
+  dlLink.href = url;
+  dlLink.download = `${certType.replace(/\s+/g, '_')}_${serialNo}.html`;
+  document.body.appendChild(dlLink);
+  dlLink.click();
+  document.body.removeChild(dlLink);
+  showToast(`Downloaded ${certType} (${serialNo})`, 'success');
+}
+
 
 // ====================================================================
 // FACULTY ATTENDANCE SESSION MANAGEMENT (DYNAMIC CALCULATION)
@@ -4072,14 +4506,571 @@ function revokeAttendanceOverride(overrideId) {
   renderAdminMainStage('admin_ops');
 }
 
+// --- Student: Submit Grievance / Complaint (Modal) ---
+async function handleSubmitComplaint(e) {
+  e.preventDefault();
+  const category = document.getElementById('complaintCategorySelect').value;
+  const priority = document.getElementById('complaintPrioritySelect').value;
+  const subject = document.getElementById('complaintSubject').value.trim();
+  const description = document.getElementById('complaintDesc').value.trim();
+
+  await createAndStoreComplaint({ category, priority, subject, description });
+  closeModal('submitComplaintModal');
+  document.getElementById('submitComplaintForm').reset();
+}
+
+// --- Student: Submit Grievance / Complaint (Inline Form) ---
+async function handleInlineComplaint(e) {
+  e.preventDefault();
+  const category = document.getElementById('inlineComplaintCategory').value;
+  const priority = document.getElementById('inlineComplaintPriority').value;
+  const subject = document.getElementById('inlineComplaintSubject').value.trim();
+  const description = document.getElementById('inlineComplaintDesc').value.trim();
+
+  await createAndStoreComplaint({ category, priority, subject, description });
+  const form = document.getElementById('inlineComplaintForm');
+  if (form) form.reset();
+}
+
+// --- Core Helper: Create and Store Grievance Ticket ---
+async function createAndStoreComplaint({ category, priority, subject, description }) {
+  const std = (AppState.currentUser && AppState.currentUser.profile) || 
+              (AppState.students && AppState.students[0]) || 
+              { id: 1, full_name: 'Alex Chen' };
+
+  const newTicket = {
+    id: Date.now(),
+    student_id: std.id,
+    student_name: std.full_name,
+    category: category || 'Academic',
+    priority: priority || 'Normal',
+    subject: subject || 'Student Grievance',
+    description: description || 'Grievance description',
+    status: 'Pending Admin Approval',
+    assigned_to: 'Dean of Student Affairs',
+    created_at: new Date().toISOString().split('T')[0],
+    resolution_notes: 'Under Administrative Verification'
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/complaints`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: std.id,
+        category,
+        priority,
+        subject,
+        description,
+        status: 'Pending Admin Approval'
+      })
+    });
+    const json = await res.json();
+    if (json.success && json.data) {
+      newTicket.id = json.data.id || newTicket.id;
+    }
+  } catch (_) {}
+
+  AppState.complaints.unshift(newTicket);
+  try {
+    localStorage.setItem('apex_complaints', JSON.stringify(AppState.complaints));
+  } catch (_) {}
+
+  showToast(`Grievance submitted successfully! Ticket #TKT-${newTicket.id} is listed below pending Admin review.`, 'success');
+
+  // Immediately refresh stage so ticket is shown below the form
+  if (AppState.currentRole === 'student') {
+    renderStudentMainStage('student_complaints');
+  } else if (AppState.currentRole === 'admin') {
+    renderAdminMainStage('admin_ops');
+  }
+}
+
+// --- Student: Request Certificate (Modal) ---
+async function handleRequestCertificate(e) {
+  e.preventDefault();
+  const cert_type = document.getElementById('certTypeSelect').value;
+  const purpose = document.getElementById('certPurposeText').value.trim();
+
+  await createAndStoreCertificate({ cert_type, purpose });
+  closeModal('requestCertificateModal');
+  document.getElementById('requestCertificateForm').reset();
+}
+
+// --- Student: Request Certificate (Inline Form) ---
+async function handleInlineCertificate(e) {
+  e.preventDefault();
+  const cert_type = document.getElementById('inlineCertType').value;
+  const purpose = document.getElementById('inlineCertPurpose').value.trim();
+
+  await createAndStoreCertificate({ cert_type, purpose });
+  const form = document.getElementById('inlineCertForm');
+  if (form) form.reset();
+}
+
+// --- Core Helper: Create and Store Certificate Request ---
+async function createAndStoreCertificate({ cert_type, purpose }) {
+  const std = (AppState.currentUser && AppState.currentUser.profile) || 
+              (AppState.students && AppState.students[0]) || 
+              { id: 1, full_name: 'Alex Chen' };
+
+  const newCert = {
+    id: Date.now(),
+    student_id: std.id,
+    student_name: std.full_name,
+    cert_type: cert_type || 'Bonafide Certificate',
+    certificate_type: cert_type || 'Bonafide Certificate',
+    purpose: purpose || 'Official Verification',
+    status: 'Pending Admin Approval',
+    issue_date: null,
+    issued_at: null,
+    serial_no: 'Pending Verification'
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/certificates/request`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: std.id,
+        certificate_type: newCert.cert_type,
+        cert_type: newCert.cert_type,
+        purpose
+      })
+    });
+    const json = await res.json();
+    if (json.success && json.data) {
+      newCert.id = json.data.id || newCert.id;
+    }
+  } catch (_) {}
+
+  AppState.certificates.unshift(newCert);
+  try {
+    localStorage.setItem('apex_certificates', JSON.stringify(AppState.certificates));
+  } catch (_) {}
+
+  showToast(`${newCert.cert_type} application submitted! Request is listed below pending Admin approval.`, 'success');
+
+  // Immediately refresh stage so certificate request is shown below the form
+  if (AppState.currentRole === 'student') {
+    renderStudentMainStage('student_certificates');
+  } else if (AppState.currentRole === 'admin') {
+    renderAdminMainStage('admin_ops');
+  }
+}
+
 // --- Admin: Approve Certificate ---
-function approveCertificate(certId) {
+async function approveCertificate(certId) {
   const cert = AppState.certificates.find(c => c.id === certId);
   if (!cert) return;
   cert.status = 'Ready for Pickup';
   cert.issue_date = new Date().toISOString().split('T')[0];
-  cert.serial_no = cert.serial_no || `CERT-${Date.now().toString().slice(-6)}`;
-  showToast(`Certificate for ${cert.student_name} approved and ready.`, 'success');
+  cert.serial_no = `BONA-2026-${Math.floor(100 + Math.random() * 900)}`;
+
+  try {
+    localStorage.setItem('apex_certificates', JSON.stringify(AppState.certificates));
+  } catch (_) {}
+
+  try {
+    await fetch(`${API_BASE}/certificates/${certId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'Ready for Pickup', serial_no: cert.serial_no })
+    });
+  } catch (_) {}
+
+  showToast(`Certificate for ${cert.student_name} approved! Serial: ${cert.serial_no}`, 'success');
+  renderAdminMainStage('admin_ops');
+}
+
+// --- Admin: Reject Certificate ---
+async function rejectCertificate(certId) {
+  const cert = AppState.certificates.find(c => c.id === certId);
+  if (!cert) return;
+  cert.status = 'Rejected';
+
+  try {
+    localStorage.setItem('apex_certificates', JSON.stringify(AppState.certificates));
+  } catch (_) {}
+
+  try {
+    await fetch(`${API_BASE}/certificates/${certId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'Rejected' })
+    });
+  } catch (_) {}
+
+  showToast(`Certificate request #${certId} has been rejected.`, 'info');
+  renderAdminMainStage('admin_ops');
+}
+
+// ====================================================================
+// DIGITAL LEAVE MANAGEMENT HANDLERS (STUDENT)
+// ====================================================================
+async function handleApplyLeaveSubmit(e) {
+  e.preventDefault();
+  const leave_type = document.getElementById('leaveTypeSelect').value;
+  const start_date = document.getElementById('leaveFromDate').value;
+  const end_date = document.getElementById('leaveToDate').value;
+  const reason = (document.getElementById('leaveReasonText').value || '').trim();
+
+  await createAndStoreLeave({ leave_type, start_date, end_date, reason });
+  closeModal('applyLeaveModal');
+  const form = document.getElementById('applyLeaveForm');
+  if (form) form.reset();
+}
+
+async function handleInlineLeave(e) {
+  e.preventDefault();
+  const leave_type = document.getElementById('inlineLeaveType').value;
+  const start_date = document.getElementById('inlineLeaveFrom').value;
+  const end_date = document.getElementById('inlineLeaveTo').value;
+  const reason = (document.getElementById('inlineLeaveReason').value || '').trim();
+
+  await createAndStoreLeave({ leave_type, start_date, end_date, reason });
+  const form = document.getElementById('inlineLeaveForm');
+  if (form) form.reset();
+}
+
+async function createAndStoreLeave({ leave_type, start_date, end_date, reason }) {
+  const std = (AppState.currentUser && AppState.currentUser.profile) ||
+              (AppState.students && AppState.students[0]) ||
+              { id: 1, full_name: 'Alex Chen', roll_number: 'APX-2022-CS-084' };
+
+  let days = 1;
+  if (start_date && end_date) {
+    const d1 = new Date(start_date);
+    const d2 = new Date(end_date);
+    const diff = Math.round((d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
+    days = diff > 0 ? diff : 1;
+  }
+
+  const newLeave = {
+    id: Date.now(),
+    student_id: std.id,
+    student_name: std.full_name,
+    roll_number: std.roll_number || 'APX-2022-CS-084',
+    leave_type: leave_type || 'Personal',
+    start_date: start_date || new Date().toISOString().split('T')[0],
+    end_date: end_date || start_date || new Date().toISOString().split('T')[0],
+    from_date: start_date || new Date().toISOString().split('T')[0],
+    to_date: end_date || start_date || new Date().toISOString().split('T')[0],
+    days_count: days,
+    reason: reason || 'Academic absence',
+    status: 'Pending',
+    review_notes: 'Awaiting Faculty / Dean Review',
+    reviewer_name: null,
+    remarks: null,
+    created_at: new Date().toISOString().split('T')[0]
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/leave/apply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: std.id,
+        leave_type: newLeave.leave_type,
+        start_date: newLeave.start_date,
+        end_date: newLeave.end_date,
+        from_date: newLeave.start_date,
+        to_date: newLeave.end_date,
+        days_count: days,
+        reason: newLeave.reason
+      })
+    });
+    const json = await res.json();
+    if (json.success && json.data) {
+      newLeave.id = json.data.id || newLeave.id;
+    }
+  } catch (_) {}
+
+  AppState.leaves.unshift(newLeave);
+  try {
+    localStorage.setItem('apex_leaves', JSON.stringify(AppState.leaves));
+  } catch (_) {}
+
+  showToast(`Leave application submitted successfully! Request #LV-${newLeave.id} is listed below awaiting review.`, 'success');
+
+  if (AppState.currentRole === 'student') {
+    renderStudentMainStage('student_leaves');
+  } else if (AppState.currentRole === 'faculty') {
+    renderFacultyMainStage('fac_leaves');
+  }
+}
+
+// ====================================================================
+// FACULTY ATTENDANCE DIRECT PERMISSION CONTROLS
+// ====================================================================
+function facultyGrantDirectPermission(studentId, courseCode) {
+  const student = AppState.students.find(s => s.id === studentId);
+  if (!student) return;
+  student._overrideGranted = student._overrideGranted || {};
+  student._overrideGranted[courseCode] = true;
+  try {
+    localStorage.setItem('apex_students', JSON.stringify(AppState.students));
+  } catch (_) {}
+  showToast(`Permission granted for ${student.full_name}! You can now enter and set custom attendance %.`, 'success');
+  renderFacultyMainStage('attendance');
+}
+
+function facultyRevokeDirectPermission(studentId, courseCode) {
+  const student = AppState.students.find(s => s.id === studentId);
+  if (!student) return;
+  if (student._overrideGranted) {
+    student._overrideGranted[courseCode] = false;
+  }
+  try {
+    localStorage.setItem('apex_students', JSON.stringify(AppState.students));
+  } catch (_) {}
+  showToast(`Attendance editing locked for ${student.full_name}.`, 'info');
+  renderFacultyMainStage('attendance');
+}
+
+function facultyGrantDirectPermissionAll(courseCode) {
+  AppState.students.forEach(s => {
+    s._overrideGranted = s._overrideGranted || {};
+    s._overrideGranted[courseCode] = true;
+  });
+  try {
+    localStorage.setItem('apex_students', JSON.stringify(AppState.students));
+  } catch (_) {}
+  showToast(`Direct permission granted for ALL ${AppState.students.length} students in ${courseCode}! You can now set attendance % for anyone.`, 'success');
+  renderFacultyMainStage('attendance');
+}
+
+function facultyRevokeDirectPermissionAll(courseCode) {
+  AppState.students.forEach(s => {
+    if (s._overrideGranted) {
+      s._overrideGranted[courseCode] = false;
+    }
+  });
+  try {
+    localStorage.setItem('apex_students', JSON.stringify(AppState.students));
+  } catch (_) {}
+  showToast(`Attendance % editing locked for all students in ${courseCode}.`, 'info');
+  renderFacultyMainStage('attendance');
+}
+
+// ====================================================================
+// STUDENT ASSIGNMENT SUBMISSION MODAL (PDF OR WORD FORMAT SELECTION)
+// ====================================================================
+let currentSelectedUploadFormat = 'PDF';
+
+function openSubmitAssignmentModal(assignId) {
+  const assign = (AppState.assignments || []).find(a => a.id === assignId);
+  if (!assign) {
+    showToast('Assignment not found.', 'warning');
+    return;
+  }
+
+  const idEl = document.getElementById('uploadAssignId');
+  if (idEl) idEl.value = assign.id;
+
+  const codeEl = document.getElementById('uploadAssignCourseCode');
+  if (codeEl) codeEl.textContent = assign.course_code;
+
+  const titleEl = document.getElementById('uploadAssignTitle');
+  if (titleEl) titleEl.textContent = assign.title;
+
+  const scoreEl = document.getElementById('uploadAssignMaxScore');
+  if (scoreEl) scoreEl.textContent = `Max Score: ${assign.max_score} pts | Due: ${assign.due_date}`;
+
+  const dueBadge = document.getElementById('uploadAssignDueBadge');
+  if (dueBadge) {
+    dueBadge.textContent = assign.status === 'Submitted' ? 'Submitted' : `Due: ${assign.due_date}`;
+    dueBadge.className = assign.status === 'Submitted' ? 'tier-status status-running' : 'tier-status status-restarting';
+  }
+
+  const format = assign.file_format || 'PDF';
+  selectSubmissionFormat(format);
+
+  const picker = document.getElementById('studentFilePicker');
+  if (picker) picker.value = '';
+  const promptEl = document.getElementById('fileUploadPrompt');
+  const infoEl = document.getElementById('fileSelectedInfo');
+  if (promptEl) promptEl.style.display = 'block';
+  if (infoEl) infoEl.style.display = 'none';
+
+  const notesEl = document.getElementById('uploadStudentNotes');
+  if (notesEl) notesEl.value = assign.notes || '';
+
+  openModal('uploadAssignmentModal');
+}
+
+function selectSubmissionFormat(format) {
+  currentSelectedUploadFormat = format;
+
+  const pdfRadio = document.getElementById('formatRadioPdf');
+  const wordRadio = document.getElementById('formatRadioWord');
+  const pdfCard = document.getElementById('choicePdfCard');
+  const wordCard = document.getElementById('choiceWordCard');
+  const fileLabel = document.getElementById('fileUploadLabel');
+  const fileHint = document.getElementById('fileFormatHint');
+  const picker = document.getElementById('studentFilePicker');
+
+  if (format === 'PDF') {
+    if (pdfRadio) pdfRadio.checked = true;
+    if (wordRadio) wordRadio.checked = false;
+    if (pdfCard) pdfCard.classList.add('active-choice');
+    if (wordCard) wordCard.classList.remove('active-choice');
+    if (fileLabel) fileLabel.innerHTML = 'Select PDF Document (.pdf) <span style="color: var(--status-danger);">*</span>';
+    if (fileHint) fileHint.innerHTML = 'Accepted format: <strong>.pdf</strong> (Adobe PDF Document, Max 25MB)';
+    if (picker) picker.accept = '.pdf,application/pdf';
+  } else {
+    if (pdfRadio) pdfRadio.checked = false;
+    if (wordRadio) wordRadio.checked = true;
+    if (wordCard) wordCard.classList.add('active-choice');
+    if (pdfCard) pdfCard.classList.remove('active-choice');
+    if (fileLabel) fileLabel.innerHTML = 'Select Word Document (.docx / .doc) <span style="color: var(--status-danger);">*</span>';
+    if (fileHint) fileHint.innerHTML = 'Accepted format: <strong>.docx, .doc</strong> (Microsoft Word File, Max 25MB)';
+    if (picker) picker.accept = '.docx,.doc,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  }
+}
+
+function handleStudentFileChosen(input) {
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    const name = file.name;
+    const sizeKB = (file.size / 1024).toFixed(1);
+    const sizeStr = file.size > 1048576 ? `${(file.size / (1024 * 1024)).toFixed(1)} MB` : `${sizeKB} KB`;
+
+    const nameEl = document.getElementById('selectedFileName');
+    const sizeEl = document.getElementById('selectedFileSize');
+    if (nameEl) nameEl.textContent = name;
+    if (sizeEl) sizeEl.textContent = `${sizeStr} • Ready to submit`;
+
+    const promptEl = document.getElementById('fileUploadPrompt');
+    const infoEl = document.getElementById('fileSelectedInfo');
+    if (promptEl) promptEl.style.display = 'none';
+    if (infoEl) infoEl.style.display = 'flex';
+
+    const ext = name.split('.').pop().toLowerCase();
+    if (ext === 'docx' || ext === 'doc') {
+      selectSubmissionFormat('Word');
+    } else if (ext === 'pdf') {
+      selectSubmissionFormat('PDF');
+    }
+  }
+}
+
+async function handleStudentAssignmentUploadSubmit(e) {
+  e.preventDefault();
+  const assignId = parseInt(document.getElementById('uploadAssignId').value, 10);
+  const format = currentSelectedUploadFormat;
+  const picker = document.getElementById('studentFilePicker');
+  const notes = (document.getElementById('uploadStudentNotes').value || '').trim();
+
+  const std = (AppState.currentUser && AppState.currentUser.profile) ||
+              (AppState.students && AppState.students[0]) ||
+              { id: 1, full_name: 'Alex Chen' };
+
+  let fileName = '';
+  if (picker && picker.files && picker.files.length > 0) {
+    fileName = picker.files[0].name;
+  } else {
+    const cleanStd = (std.full_name || 'student').toLowerCase().replace(/\s+/g, '_');
+    const ext = format === 'PDF' ? 'pdf' : 'docx';
+    fileName = `${cleanStd}_assign_${assignId}_submission.${ext}`;
+  }
+
+  const assign = (AppState.assignments || []).find(a => a.id === assignId);
+  if (assign) {
+    assign.status = 'Submitted';
+    assign.file_format = format;
+    assign.file_name = fileName;
+    assign.submitted_at = new Date().toISOString();
+    assign.notes = notes;
+  }
+
+  try {
+    localStorage.setItem('apex_assignments', JSON.stringify(AppState.assignments));
+  } catch (_) {}
+
+  try {
+    await fetch(`${API_BASE}/assignments/${assignId}/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        file_format: format,
+        file_name: fileName,
+        notes: notes
+      })
+    });
+  } catch (_) {}
+
+  closeModal('uploadAssignmentModal');
+  showToast(`Assignment submitted successfully as ${format} document (${fileName})!`, 'success');
+
+  if (AppState.currentRole === 'student') {
+    renderStudentMainStage('assignments');
+  }
+}
+
+// Global window bindings for inline/onclick handlers
+window.handleApplyLeaveSubmit = handleApplyLeaveSubmit;
+window.handleInlineLeave = handleInlineLeave;
+window.createAndStoreLeave = createAndStoreLeave;
+window.facultyGrantDirectPermission = facultyGrantDirectPermission;
+window.facultyRevokeDirectPermission = facultyRevokeDirectPermission;
+window.facultyGrantDirectPermissionAll = facultyGrantDirectPermissionAll;
+window.facultyRevokeDirectPermissionAll = facultyRevokeDirectPermissionAll;
+window.openSubmitAssignmentModal = openSubmitAssignmentModal;
+window.selectSubmissionFormat = selectSubmissionFormat;
+window.handleStudentFileChosen = handleStudentFileChosen;
+window.handleStudentAssignmentUploadSubmit = handleStudentAssignmentUploadSubmit;
+
+// --- Admin: Resolve Grievance ---
+async function adminResolveGrievance(complaintId) {
+  const c = AppState.complaints.find(comp => comp.id === complaintId);
+  if (!c) return;
+  c.status = 'Resolved';
+  c.resolution_notes = 'Approved & resolved by Chief Administrator.';
+
+  try {
+    localStorage.setItem('apex_complaints', JSON.stringify(AppState.complaints));
+  } catch (_) {}
+
+  try {
+    await fetch(`${API_BASE}/complaints/${complaintId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        status: 'Resolved',
+        resolution_notes: c.resolution_notes,
+        assigned_to: 'Admin Office'
+      })
+    });
+  } catch (_) {}
+
+  showToast(`Grievance #TKT-${complaintId} marked as Resolved!`, 'success');
+  renderAdminMainStage('admin_ops');
+}
+
+// --- Admin: Mark Grievance In Progress ---
+async function adminReviewGrievance(complaintId) {
+  const c = AppState.complaints.find(comp => comp.id === complaintId);
+  if (!c) return;
+  c.status = 'In Progress';
+  c.resolution_notes = 'Under active administrative investigation.';
+
+  try {
+    localStorage.setItem('apex_complaints', JSON.stringify(AppState.complaints));
+  } catch (_) {}
+
+  try {
+    await fetch(`${API_BASE}/complaints/${complaintId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        status: 'In Progress',
+        resolution_notes: c.resolution_notes
+      })
+    });
+  } catch (_) {}
+
+  showToast(`Grievance #TKT-${complaintId} marked as In Progress.`, 'info');
   renderAdminMainStage('admin_ops');
 }
 
@@ -4094,20 +5085,45 @@ function openEditStudent(id) {
   document.getElementById('editStdDept').value = s.department;
   document.getElementById('editStdSem').value = s.semester;
   document.getElementById('editStdCgpa').value = s.cgpa;
+  const attField = document.getElementById('editStdAttendance');
+  if (attField) {
+    attField.value = s.overall_attendance !== undefined ? s.overall_attendance : 0.0;
+  }
   openModal('editStudentModal');
 }
 
-function saveEditStudent(e) {
+async function saveEditStudent(e) {
   e.preventDefault();
   const id = parseInt(document.getElementById('editStdId').value);
   const s = AppState.students.find(st => st.id === id);
   if (!s) return;
-  s.full_name   = document.getElementById('editStdName').value;
-  s.email       = document.getElementById('editStdEmail').value;
-  s.roll_number = document.getElementById('editStdRoll').value;
+  s.full_name   = document.getElementById('editStdName').value.trim();
+  s.email       = document.getElementById('editStdEmail').value.trim();
+  s.roll_number = document.getElementById('editStdRoll').value.trim();
   s.department  = document.getElementById('editStdDept').value;
-  s.semester    = parseInt(document.getElementById('editStdSem').value);
-  s.cgpa        = parseFloat(document.getElementById('editStdCgpa').value);
+  s.semester    = parseInt(document.getElementById('editStdSem').value) || 1;
+  s.cgpa        = parseFloat(document.getElementById('editStdCgpa').value) || 0.0;
+  const attField = document.getElementById('editStdAttendance');
+  if (attField) {
+    s.overall_attendance = parseFloat(attField.value) || 0.0;
+  }
+
+  try {
+    await fetch(`${API_BASE}/students/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: s.full_name,
+        email: s.email,
+        roll_number: s.roll_number,
+        department: s.department,
+        semester: s.semester,
+        cgpa: s.cgpa,
+        overall_attendance: s.overall_attendance
+      })
+    });
+  } catch (_) {}
+
   showToast(`${s.full_name}'s record updated successfully.`, 'success');
   closeModal('editStudentModal');
   if (AppState.currentRole === 'faculty') {
@@ -4243,11 +5259,13 @@ async function loadInitialData() {
       AppState.marks = mergedMarks;
     }
 
-    // Sync fee and leave records in background if API is available
+    // Sync fee, leave, complaints, and certificate records in background if API is available
     try {
-      const [feeRes, leaveRes] = await Promise.all([
+      const [feeRes, leaveRes, compRes, certRes] = await Promise.all([
         fetch(`${API_BASE}/fees`).catch(() => null),
-        fetch(`${API_BASE}/leave`).catch(() => null)
+        fetch(`${API_BASE}/leave`).catch(() => null),
+        fetch(`${API_BASE}/complaints`).catch(() => null),
+        fetch(`${API_BASE}/certificates`).catch(() => null)
       ]);
       if (feeRes && feeRes.ok) {
         const feeJson = await feeRes.json();
@@ -4276,6 +5294,32 @@ async function loadInitialData() {
         const leaveJson = await leaveRes.json();
         if (leaveJson.success && leaveJson.data && leaveJson.data.length > 0) {
           AppState.leaves = leaveJson.data;
+        }
+      }
+      if (compRes && compRes.ok) {
+        const compJson = await compRes.json();
+        if (compJson.success && Array.isArray(compJson.data) && compJson.data.length > 0) {
+          const existingIds = new Set(AppState.complaints.map(c => c.id));
+          compJson.data.forEach(item => {
+            if (!existingIds.has(item.id)) AppState.complaints.push(item);
+          });
+          try { localStorage.setItem('apex_complaints', JSON.stringify(AppState.complaints)); } catch (_) {}
+        }
+      }
+      if (certRes && certRes.ok) {
+        const certJson = await certRes.json();
+        if (certJson.success && Array.isArray(certJson.data) && certJson.data.length > 0) {
+          const existingIds = new Set(AppState.certificates.map(c => c.id));
+          certJson.data.forEach(item => {
+            if (!existingIds.has(item.id)) {
+              AppState.certificates.push({
+                ...item,
+                cert_type: item.cert_type || item.certificate_type || 'Bonafide Certificate',
+                serial_no: item.serial_no || (item.status === 'Approved' ? `BONA-2026-${String(item.student_id || item.id || 1).padStart(3, '0')}` : 'Pending Verification')
+              });
+            }
+          });
+          try { localStorage.setItem('apex_certificates', JSON.stringify(AppState.certificates)); } catch (_) {}
         }
       }
     } catch (_) {}
@@ -4500,6 +5544,7 @@ function handleInquirySubmit(e) {
 function initTheme() {
   document.documentElement.setAttribute('data-theme', AppState.theme);
   updateThemeIcon();
+  playActiveVideos();
 
   const toggleBtn = document.getElementById('themeToggleBtn');
   if (toggleBtn) {
@@ -4508,9 +5553,22 @@ function initTheme() {
       localStorage.setItem('apex_theme', AppState.theme);
       document.documentElement.setAttribute('data-theme', AppState.theme);
       updateThemeIcon();
+      playActiveVideos();
       showToast(`Switched to ${AppState.theme} theme`, 'info');
     });
   }
+}
+
+function playActiveVideos() {
+  const videos = document.querySelectorAll('.auth-bg-video, .hero-bg-video');
+  videos.forEach(v => {
+    v.muted = true;
+    v.playsInline = true;
+    const playPromise = v.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  });
 }
 
 function updateThemeIcon() {
@@ -4654,3 +5712,139 @@ function capitalize(str) {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+// ====================================================================
+// CYBER / ACADEMIC CONSTELLATION PARTICLE SYSTEM (LOGIN & REGISTER)
+// ====================================================================
+let authParticlesAnimId = null;
+
+function initAuthParticles() {
+  const canvasIds = ['loginParticlesCanvas', 'registerParticlesCanvas'];
+  const activeCanvases = canvasIds
+    .map(id => document.getElementById(id))
+    .filter(c => c && c.offsetParent !== null);
+
+  if (activeCanvases.length === 0) {
+    // If not visible yet, try when the view renders
+    const fallbackCanvas = document.getElementById('loginParticlesCanvas');
+    if (fallbackCanvas) setupCanvasInstance(fallbackCanvas);
+    return;
+  }
+
+  activeCanvases.forEach(canvas => setupCanvasInstance(canvas));
+}
+
+function setupCanvasInstance(canvas) {
+  if (!canvas || canvas.dataset.initialized === 'true') return;
+  canvas.dataset.initialized = 'true';
+
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let particles = [];
+  const particleCount = 55;
+  const colors = ['#0f62fe', '#11d3f3', '#4589ff', '#8a3ffc', '#e0e7ff'];
+
+  let mouse = { x: -1000, y: -1000, radius: 140 };
+
+  function resize() {
+    const parent = canvas.parentElement;
+    width = canvas.width = parent ? parent.clientWidth : window.innerWidth;
+    height = canvas.height = parent ? parent.clientHeight : window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+  });
+
+  // Particle constructor
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.75,
+      vy: (Math.random() - 0.5) * 0.75,
+      radius: Math.random() * 2.2 + 1.2,
+      baseAlpha: Math.random() * 0.5 + 0.3,
+      alpha: Math.random() * 0.5 + 0.3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      pulse: Math.random() * Math.PI,
+      pulseSpeed: 0.03 + Math.random() * 0.02
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    // Update and draw particles
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+
+      // Pulse alpha
+      p.pulse += p.pulseSpeed;
+      p.alpha = p.baseAlpha + Math.sin(p.pulse) * 0.2;
+
+      // Mouse influence
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < mouse.radius) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        const angle = Math.atan2(dy, dx);
+        p.x -= Math.cos(angle) * force * 2.2;
+        p.y -= Math.sin(angle) * force * 2.2;
+      }
+
+      // Movement
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Wrap around edges
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+
+      // Draw particle with glow
+      ctx.save();
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = p.color;
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // Connect nearby particles (constellation effect)
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const pDist = Math.hypot(p.x - p2.x, p.y - p2.y);
+        const maxDist = 125;
+        if (pDist < maxDist) {
+          const lineAlpha = (1 - pDist / maxDist) * 0.26;
+          ctx.strokeStyle = `rgba(17, 211, 243, ${lineAlpha})`;
+          ctx.lineWidth = 0.9;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+

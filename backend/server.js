@@ -369,18 +369,23 @@ app.get('/api/students', (req, res) => {
 });
 
 app.post('/api/students', (req, res) => {
-  const { full_name, email, department, roll_number, semester, cgpa } = req.body;
+  const { full_name, email, department, roll_number, semester, cgpa, overall_attendance, attendance } = req.body;
   const store = db.getStore();
+  const parsedAtt = attendance !== undefined ? parseFloat(attendance) : (overall_attendance !== undefined ? parseFloat(overall_attendance) : 0.0);
+  let cleanRoll = (roll_number || '').trim();
+  if (!cleanRoll || cleanRoll === 'APX-') {
+    cleanRoll = `APX-2026-CS-${Math.floor(100 + Math.random() * 900)}`;
+  }
   const newStudent = {
     id: store.students.length + 1,
     user_id: null,
     full_name: full_name || 'New Student',
     email: email || `student_${Date.now()}@apex.edu`,
-    roll_number: roll_number || `APX-2024-${Math.floor(100 + Math.random() * 900)}`,
-    department: department || 'Computer Science & Engineering',
+    roll_number: cleanRoll,
+    department: department || 'Computer Science & Cloud Computing',
     semester: parseInt(semester || '1', 10),
-    batch_year: '2024-2028',
-    overall_attendance: 85.0,
+    batch_year: '2026-2030',
+    overall_attendance: isNaN(parsedAtt) ? 0.0 : parsedAtt,
     cgpa: parseFloat(cgpa || '8.5'),
     mentor_name: 'Dr. Robert Vance',
     status: 'Active'
@@ -394,13 +399,17 @@ app.put('/api/students/:id', (req, res) => {
   const store = db.getStore();
   const student = store.students.find(s => s.id === id);
   if (student) {
-    const { full_name, email, department, roll_number, semester, cgpa } = req.body;
+    const { full_name, email, department, roll_number, semester, cgpa, overall_attendance, attendance } = req.body;
     if (full_name) student.full_name = full_name;
     if (email) student.email = email;
     if (department) student.department = department;
     if (roll_number) student.roll_number = roll_number;
     if (semester) student.semester = parseInt(semester, 10);
     if (cgpa) student.cgpa = parseFloat(cgpa);
+    if (overall_attendance !== undefined || attendance !== undefined) {
+      const val = parseFloat(overall_attendance !== undefined ? overall_attendance : attendance);
+      if (!isNaN(val)) student.overall_attendance = val;
+    }
     return res.json({ success: true, message: 'Student details updated successfully.', data: student });
   }
   res.status(404).json({ success: false, message: 'Student not found.' });
@@ -693,20 +702,30 @@ app.get('/api/leave', (req, res) => {
 });
 
 app.post('/api/leave/apply', (req, res) => {
-  const { student_id, leave_type, from_date, to_date, reason } = req.body;
+  const { student_id, leave_type, from_date, to_date, start_date, end_date, days_count, reason } = req.body;
   const store = db.getStore();
   const student = store.students.find(s => s.id === parseInt(student_id || '1', 10)) || store.students[0];
 
+  const startDate = start_date || from_date || new Date().toISOString().split('T')[0];
+  const endDate = end_date || to_date || startDate;
+  const days = parseInt(days_count, 10) || 1;
+
   const newLeave = {
-    id: store.leaves.length + 1,
+    id: Date.now(),
     student_id: student.id,
     student_name: student.full_name,
+    roll_number: student.roll_number || 'APX-2022-CS-084',
     leave_type: leave_type || 'Personal',
-    from_date: from_date || new Date().toISOString().split('T')[0],
-    to_date: to_date || new Date().toISOString().split('T')[0],
+    start_date: startDate,
+    end_date: endDate,
+    from_date: startDate,
+    to_date: endDate,
+    days_count: days,
     reason: reason || 'Personal absence',
     status: 'Pending',
+    review_notes: 'Awaiting Faculty / Dean Review',
     reviewed_by: null,
+    reviewer_name: null,
     remarks: null,
     created_at: new Date().toISOString().split('T')[0]
   };
@@ -717,7 +736,7 @@ app.post('/api/leave/apply', (req, res) => {
     role: 'faculty',
     category: 'Leave',
     title: `New Leave Request: ${student.full_name}`,
-    message: `${student.full_name} submitted a ${newLeave.leave_type} leave request (${newLeave.from_date} to ${newLeave.to_date}). Requires faculty approval.`,
+    message: `${student.full_name} submitted a ${newLeave.leave_type} leave request (${newLeave.start_date} to ${newLeave.end_date}). Requires faculty approval.`,
     priority: 'Normal'
   });
 
@@ -843,10 +862,10 @@ app.post('/api/complaints', (req, res) => {
     priority: priority || 'Normal',
     subject: subject || 'Campus Support Request',
     description: description || 'No details provided.',
-    status: 'Open',
-    assigned_to: 'Campus Helpdesk Operations',
+    status: req.body.status || 'Pending Admin Approval',
+    assigned_to: 'Dean of Student Affairs',
     created_at: new Date().toISOString().split('T')[0],
-    resolution_notes: null
+    resolution_notes: 'Under Administrative Verification'
   };
   store.complaints.unshift(newTicket);
 
@@ -894,24 +913,36 @@ app.put('/api/complaints/:id/status', (req, res) => {
 
 app.get('/api/certificates', (req, res) => {
   const store = db.getStore();
+  // Ensure cert_type and serial_no exist on all records
+  store.certificates.forEach(c => {
+    c.cert_type = c.cert_type || c.certificate_type || 'Bonafide Certificate';
+    c.certificate_type = c.cert_type;
+    if (!c.serial_no && (c.status === 'Approved' || c.status === 'Ready for Pickup')) {
+      c.serial_no = `BONA-2026-${String(c.student_id || c.id || 1).padStart(3, '0')}`;
+    }
+  });
   res.json({ success: true, count: store.certificates.length, data: store.certificates });
 });
 
 app.post('/api/certificates/request', (req, res) => {
-  const { student_id, certificate_type, purpose } = req.body;
+  const { student_id, certificate_type, cert_type, purpose } = req.body;
   const store = db.getStore();
   const id = parseInt(student_id || '1', 10);
   const student = store.students.find(s => s.id === id) || store.students[0];
+  const docType = cert_type || certificate_type || 'Bonafide Certificate';
 
   const newCert = {
     id: store.certificates.length + 1,
     student_id: student.id,
     student_name: student.full_name,
-    certificate_type: certificate_type || 'Bonafide Certificate',
+    cert_type: docType,
+    certificate_type: docType,
     purpose: purpose || 'Academic Documentation',
-    status: 'Processing',
+    status: 'Pending Admin Approval',
     requested_at: new Date().toISOString().split('T')[0],
-    issued_at: null
+    issue_date: null,
+    issued_at: null,
+    serial_no: 'Pending Verification'
   };
   store.certificates.unshift(newCert);
 
@@ -921,7 +952,7 @@ app.post('/api/certificates/request', (req, res) => {
     role: 'student',
     category: 'Academic',
     title: `Certificate Requested`,
-    message: `Your request for ${newCert.certificate_type} is now being processed by the Registrar Office.`,
+    message: `Your request for ${newCert.cert_type} is now being processed by the Registrar Office.`,
     priority: 'Normal'
   });
 
@@ -930,14 +961,19 @@ app.post('/api/certificates/request', (req, res) => {
 
 app.put('/api/certificates/:id/status', (req, res) => {
   const id = parseInt(req.params.id, 10);
-  const { status } = req.body;
+  const { status, serial_no } = req.body;
   const store = db.getStore();
   const cert = store.certificates.find(c => c.id === id);
 
   if (cert) {
     cert.status = status || 'Approved';
-    if (cert.status === 'Approved') {
+    if (cert.status === 'Approved' || cert.status === 'Ready for Pickup') {
       cert.issued_at = new Date().toISOString().split('T')[0];
+      cert.issue_date = cert.issued_at;
+      cert.serial_no = serial_no || cert.serial_no;
+      if (!cert.serial_no || cert.serial_no === 'Pending Verification' || cert.serial_no === 'Pending') {
+        cert.serial_no = `BONA-2026-${Math.floor(100 + Math.random() * 900)}`;
+      }
     }
 
     createNotification({
@@ -945,7 +981,7 @@ app.put('/api/certificates/:id/status', (req, res) => {
       role: 'student',
       category: 'Academic',
       title: `Certificate ${cert.status}`,
-      message: `Your ${cert.certificate_type} is ${cert.status}. Available for digital verification in your student dashboard.`,
+      message: `Your ${cert.cert_type || cert.certificate_type} is ${cert.status}. Serial: ${cert.serial_no || 'Issued'}. Available for digital verification in your student dashboard.`,
       priority: 'Normal'
     });
 
@@ -1120,18 +1156,24 @@ app.post('/api/assignments', (req, res) => {
 
 app.post('/api/assignments/:id/submit', (req, res) => {
   const id = parseInt(req.params.id, 10);
+  const { file_format, file_name, notes } = req.body || {};
   const store = db.getStore();
   const assignment = store.assignments.find(a => a.id === id);
   if (assignment) {
     assignment.status = 'Submitted';
+    assignment.file_format = file_format || 'PDF';
+    assignment.file_name = file_name || 'submission.pdf';
+    assignment.submitted_at = new Date().toISOString();
+    if (notes) assignment.notes = notes;
+
     createNotification({
       role: 'faculty',
       category: 'Assignment',
       title: `Assignment Submission Received`,
-      message: `Student submission received for ${assignment.title}. Ready for grading.`,
+      message: `Student submission (${assignment.file_format}: ${assignment.file_name}) received for ${assignment.title}. Ready for grading.`,
       priority: 'Normal'
     });
-    return res.json({ success: true, message: 'Assignment submitted successfully!', data: assignment });
+    return res.json({ success: true, message: `Assignment submitted successfully as ${assignment.file_format}!`, data: assignment });
   }
   res.status(404).json({ success: false, message: 'Assignment not found.' });
 });

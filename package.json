@@ -5,20 +5,13 @@
   "scripts": {
     "postinstall": "cd backend && npm install",
     "start": "node backend/server.js",
-    "dev": "node --watch backend/server.js",
-    "docker:build": "docker compose build",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f"
+    "dev": "node --watch backend/server.js"
   },
   "keywords": [
     "ibm",
-    "docker",
-    "containerization",
     "college-portal",
     "express",
-    "postgresql",
-    "nginx"
+    "postgresql"
   ],
   "author": "Apex Institute / IBM Academic Project",
   "license": "ISC",

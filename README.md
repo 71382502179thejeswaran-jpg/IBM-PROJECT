@@ -320,7 +320,7 @@ The application will launch on `http://localhost:5000/` serving both the full RE
 
 ---
 
-## 12. API Endpoints Documentation
+## 9. API Endpoints Documentation
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -352,12 +352,12 @@ The application will launch on `http://localhost:5000/` serving both the full RE
 
 ---
 
-## 13. Future Enhancements
+## 10. Future Enhancements
 
-1. **Kubernetes (K8s) Helm Charts**: Package the microservices into Helm charts for automated deployment onto IBM Cloud Kubernetes Service (IKS) or Red Hat OpenShift.
-2. **Horizontal Pod Autoscaling (HPA)**: Configure metrics-server to auto-scale backend API pods based on CPU/memory thresholds.
-3. **CI/CD Pipeline with GitHub Actions / Tekton**: Automated Docker image builds, Trivy vulnerability scanning, and automated deployment upon `git push`.
-4. **Distributed Redis Caching**: Introduce a Redis container tier for session management and caching high-frequency course catalog queries.
+1. **Kubernetes (K8s) Deployment**: Package the services for automated deployment onto IBM Cloud Kubernetes Service (IKS) or Red Hat OpenShift.
+2. **Horizontal Autoscaling**: Configure metrics-server to auto-scale backend API instances based on CPU/memory thresholds.
+3. **CI/CD Pipeline with GitHub Actions**: Automated testing, linting, and continuous deployment upon `git push`.
+4. **Distributed Redis Caching**: Introduce a Redis caching tier for session management and caching high-frequency course catalog queries.
 5. **Role-Based Fine-Grained RBAC**: Integration with enterprise LDAP / OAuth2 Single Sign-On (SSO).
 
 ---
@@ -365,7 +365,7 @@ The application will launch on `http://localhost:5000/` serving both the full RE
 ## Academic Project Information
 
 - **Project Title**: Containerizing a College Portal
-- **Domain**: Cloud Computing, Containerization & DevOps
+- **Domain**: Cloud Computing & Full-Stack Web Development
 - **Standard**: IBM Academic / Project Submission
-- **Target Platform**: Docker, Docker Compose, Linux Containers (OCI)
+- **Target Platform**: Node.js, Express, PostgreSQL, Vercel Edge Cloud
 - **License**: ISC License
